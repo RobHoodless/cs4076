@@ -3,7 +3,7 @@
 
 #include <mobileentity.h>
 
-#include <QSET>
+#include <QSet>
 
 
 class Player : public MobileEntity {
