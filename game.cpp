@@ -4,6 +4,7 @@
 #include <QGraphicsView>
 #include <QDebug>
 #include <QString>
+
 #include <time.h>
 
 #include <room.h>
@@ -32,14 +33,9 @@ void Game::run() {
     Player * player = new Player(MAX_X, MAX_Y);
     player->setPos(MAX_X / 2, MAX_Y / 2);
 
-    //Item *item = new Item();
-
-
-    // Add the item to the scene
-
+    // Add the player to the scene
     scene->addItem(player);
     scene->setBackgroundBrush(QBrush(QImage(":/images/background.png")));
-
 
     // Add the view needed to visualise the scene.
     view = new GameView(scene, player);
@@ -49,7 +45,8 @@ void Game::run() {
     player->setFocus();
 
     //Create room object.
-    Room *room = new Room(scene, player);
+    Room *room = new Room(scene, player, false, false, false, false);
+
     //draw the room onscreen.
     room->draw();
 
@@ -61,39 +58,22 @@ void Game::run() {
     clock_t this_time = clock();
     clock_t last_time = this_time;
 
-    //qDebug() << QString("gran = ") << NUM_SECONDS * CLOCKS_PER_SEC << endl;
-
-    //player->setPos(400, 500);
-    //item->draw();
-    //player->draw();
-
     //main game loop
     while(!this->isPaused()) {
-
         this->qApplication->processEvents();
 
         this_time = clock();
-
         time_counter += (double) (this_time - last_time);
-
         last_time = this_time;
 
         if(time_counter > (double)(NUM_SECONDS * CLOCKS_PER_SEC)) {
             time_counter -= (double)(NUM_SECONDS * CLOCKS_PER_SEC);
-            //
-            //qDebug() << "Frame count: " << count << endl;
             count++;
             room->refresh();
-            //player->move();
-            //player->refreshSprite();
-
-
         }
-
     }
     qApplication->exit();
     view->close();
-
 }
 
 bool Game::isPaused() {
@@ -101,10 +81,10 @@ bool Game::isPaused() {
 }
 
 int main(int argc, char *argv[]) {
-
     QApplication a(argc, argv);
 
     Game game(&a);
+    //main game loop is in here, don't need QApplication.exec()
     game.newGame();
 
     //return a.exec();

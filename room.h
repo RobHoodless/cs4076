@@ -14,7 +14,7 @@ using namespace std;
 
 class Room {
 public:
-    Room(QGraphicsScene *scene, Player *player);
+    Room(QGraphicsScene *scene, Player *player, bool roomNorth, bool roomSouth, bool roomEast, bool roomWest);
     void draw();
     void refresh(); //redraw all mobile entities.
     void moveEntities(); //Move all mobile entities.

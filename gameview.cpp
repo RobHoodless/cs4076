@@ -9,7 +9,6 @@
 using namespace std;
 
 GameView::GameView(QGraphicsScene *scene, Player *player): QGraphicsView(scene) {
-    qDebug() << "Correct constructor called" << endl;
     this->player = player;
     }
 

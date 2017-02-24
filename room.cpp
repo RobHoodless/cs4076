@@ -10,7 +10,7 @@
 #include <item.h>
 #include <time.h>
 
-Room::Room(QGraphicsScene *scene, Player *player) {
+Room::Room(QGraphicsScene *scene, Player *player, bool roomNorth, bool roomSouth, bool roomEast, bool roomWest) {
     this->player = player;
     this->scene = scene;
 

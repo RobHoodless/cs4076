@@ -15,7 +15,6 @@ Player::Player(int maxX, int maxY) {
 
     this->setPixmap(standing);
     nextSprite = standing;
-    //delete spriteSheet;
 
     this->maxX = maxX - 100;
     this->maxY = maxY - 100;
@@ -60,7 +59,6 @@ void Player::processKeys() {
         movingWest = true;
         numSteps++;
     }
-
     if(keysPressed.contains(Qt::Key_D) ) {
         movingEast = true;
         numSteps++;
@@ -78,7 +76,6 @@ void Player::draw() {
 }
 
 void Player::move() {
-    //qDebug() << "move function called" << endl;
     if(movingWest) {
         //10 can be replaced with a variable if we want to implement
         //a speed attribute.
@@ -90,7 +87,6 @@ void Player::move() {
         else {
             nextSprite = walkingFull;
         }
-
     }
     if(movingEast) {
         int nextX = ((((this->x() + 10)) > this->maxX) ? this->maxX : (this->x() + 10));
