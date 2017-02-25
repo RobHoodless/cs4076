@@ -3,5 +3,9 @@
         <file>diamond.png</file>
         <file>dragon.png</file>
         <file>background.png</file>
+        <file>full_room.png</file>
+        <file>horizontal.png</file>
+        <file>new_room.png</file>
+        <file>vertical.png</file>
     </qresource>
 </RCC>
