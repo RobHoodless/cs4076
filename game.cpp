@@ -24,14 +24,14 @@ void Game::run() {
     const double NUM_SECONDS = 0.033;
     const int MAX_X = 800;
     const int MAX_Y = 600;
+    const int MAP_SIZE = 150;
 
     // Create the scene
     QGraphicsScene * scene = new QGraphicsScene();
     scene->setSceneRect(0,0,MAX_X,MAX_Y);
 
     // Create the item to put into the scene.
-    Player * player = new Player(MAX_X, MAX_Y);
-    player->setPos(MAX_X / 2, MAX_Y / 2);
+    Player * player = new Player(MAX_X, MAX_Y - MAP_SIZE);
 
     // Add the player to the scene
     scene->addItem(player);
@@ -49,6 +49,8 @@ void Game::run() {
 
     //draw the room onscreen.
     room->draw();
+
+    player->setPos(MAX_X / 2, MAX_Y / 2);
 
     view->show();
 
