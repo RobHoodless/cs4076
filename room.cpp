@@ -27,7 +27,7 @@ void Room::createEntities() {
 
     //x coord will be under 750, enforce y coord under 550 to make sure the whole diamond is in view.
     for(int i = 0; i < 5; i++) {
-        this->items.push_back(new Item(rand_coord_func_partial(), rand_coord_func_partial() % 550 ));
+        this->items.push_back(new Item(rand_coord_func_partial(), rand_coord_func_partial() % 400 ));
     }
     //NOTE:
     //Non functional version would be:
