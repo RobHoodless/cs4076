@@ -10,9 +10,14 @@
 #include <item.h>
 #include <time.h>
 
-Room::Room(QGraphicsScene *scene, Player *player, bool roomNorth, bool roomSouth, bool roomEast, bool roomWest) {
+Room::Room(QGraphicsScene *scene, Player *player, bool roomNorth, bool roomEast, bool roomSouth, bool roomWest) {
     this->player = player;
     this->scene = scene;
+
+    this->roomNorth = roomNorth;
+    this->roomEast = roomEast;
+    this->roomSouth = roomSouth;
+    this->roomWest = roomWest;
 
     this->createEntities();
 }
@@ -48,7 +53,7 @@ void Room::refresh() {
 }
 
 void Room::draw() {
-    player->setPos(400, 500);
+    player->setPos(350, 600 - 250);
     player->draw();
     for(auto & item: this->items) {
         qDebug() << "Iteration" <<endl;
@@ -56,4 +61,20 @@ void Room::draw() {
         this->scene->addItem(item);
         item->draw();
     }
+}
+
+bool Room::getRoomNorth() {
+    return roomNorth;
+}
+
+bool Room::getRoomEast() {
+    return roomEast;
+}
+
+bool Room::getRoomSouth() {
+    return roomSouth;
+}
+
+bool Room::getRoomWest() {
+    return roomWest;
 }

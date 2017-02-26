@@ -32,7 +32,8 @@ SOURCES +=\
     mobileentity.cpp \
     player.cpp \
     room.cpp \
-    gameview.cpp
+    gameview.cpp \
+    map.cpp
 
 HEADERS  += game.h \
     entity.h \
@@ -42,7 +43,8 @@ HEADERS  += game.h \
     mobileentity.h \
     player.h \
     room.h \
-    gameview.h
+    gameview.h \
+    map.h
 
 FORMS    +=
 

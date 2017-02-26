@@ -7,11 +7,11 @@
 
 #include <time.h>
 
-#include <room.h>
-#include <player.h>
-#include <item.h>
-#include <gameview.h>
-
+#include "room.h"
+#include "player.h"
+#include "item.h"
+#include "gameview.h"
+#include "map.h"
 
 Game::Game(QApplication *qApplication) {
     this->qApplication = qApplication;
@@ -44,13 +44,23 @@ void Game::run() {
     player->setFlag(QGraphicsItem::ItemIsFocusable);
     player->setFocus();
 
-    //Create room object.
-    Room *room = new Room(scene, player, false, false, false, false);
+    Map* mapPtr = new Map();
+
+    bool neighbourRooms[] = {false, false, false, false};
+    mapPtr->getNeighbourRooms(neighbourRooms);
+    Room* roomPtr = new Room(scene, player, neighbourRooms[0],neighbourRooms[1],neighbourRooms[2],neighbourRooms[3]);
+
+    mapPtr->printMap();
+    qDebug() << "X: " << mapPtr->getActiveX();
+    qDebug() << "Y: " << mapPtr->getActiveY();
+    qDebug() << "North: " << roomPtr->getRoomNorth();
+    qDebug() << "East: " << roomPtr->getRoomEast();
+    qDebug() << "South: " << roomPtr->getRoomSouth();
+    qDebug() << "West: " << roomPtr->getRoomWest();
+
 
     //draw the room onscreen.
-    room->draw();
-
-    player->setPos(MAX_X / 2, MAX_Y / 2);
+    roomPtr->draw();
 
     view->show();
 
@@ -71,7 +81,7 @@ void Game::run() {
         if(time_counter > (double)(NUM_SECONDS * CLOCKS_PER_SEC)) {
             time_counter -= (double)(NUM_SECONDS * CLOCKS_PER_SEC);
             count++;
-            room->refresh();
+            roomPtr->refresh();
         }
     }
     qApplication->exit();
