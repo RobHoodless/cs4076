@@ -3,10 +3,9 @@
 #include <QImage>
 #include <QPixmap>
 
-Item::Item()
-{
+Item::Item() {
     spriteSheet = new QImage(":/images/diamond.png");
-    sprite = QPixmap::fromImage(spriteSheet->copy(0,0, 50, 50));
+    sprite = QPixmap::fromImage(spriteSheet->copy(0, 0, 50, 50));
     setPixmap(sprite);
 }
 
@@ -15,12 +14,10 @@ Item::Item(int initialX, int initialY) : Item() {
     this->initialY = initialY;
 }
 
-void Item::draw()
-{
+void Item::draw() {
     setPos(this->initialX, this->initialY);
 }
 
-void Item::handleCollision(Player *player)
-{
+void Item::handleCollision(Player *player) {
     delete this;
 }
