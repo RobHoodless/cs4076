@@ -32,6 +32,7 @@ private:
     Player *player;
     vector<MobileEntity> enemies;
     void createEntities();
+    void createDoors();
     void handleCollisions();
     long roomId; //used to get room details from JSON rooms info.
     void loadEntities(); //draw all entities in room

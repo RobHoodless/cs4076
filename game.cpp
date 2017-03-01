@@ -44,23 +44,15 @@ void Game::run() {
     player->setFlag(QGraphicsItem::ItemIsFocusable);
     player->setFocus();
 
-    Map* mapPtr = new Map();
+    Map map;
+    map.printMap();
 
     bool neighbourRooms[] = {false, false, false, false};
-    mapPtr->getNeighbourRooms(neighbourRooms);
-    Room* roomPtr = new Room(scene, player, neighbourRooms[0],neighbourRooms[1],neighbourRooms[2],neighbourRooms[3]);
-
-    mapPtr->printMap();
-    qDebug() << "X: " << mapPtr->getActiveX();
-    qDebug() << "Y: " << mapPtr->getActiveY();
-    qDebug() << "North: " << roomPtr->getRoomNorth();
-    qDebug() << "East: " << roomPtr->getRoomEast();
-    qDebug() << "South: " << roomPtr->getRoomSouth();
-    qDebug() << "West: " << roomPtr->getRoomWest();
-
+    map.getNeighbourRooms(neighbourRooms);
+    Room room(scene, player, neighbourRooms[0],neighbourRooms[1],neighbourRooms[2],neighbourRooms[3]);
 
     //draw the room onscreen.
-    roomPtr->draw();
+    room.draw();
 
     view->show();
 
@@ -78,10 +70,10 @@ void Game::run() {
         time_counter += (double) (this_time - last_time);
         last_time = this_time;
 
-        if(time_counter > (double)(NUM_SECONDS * CLOCKS_PER_SEC)) {
+        if (time_counter > (double)(NUM_SECONDS * CLOCKS_PER_SEC)) {
             time_counter -= (double)(NUM_SECONDS * CLOCKS_PER_SEC);
             count++;
-            roomPtr->refresh();
+            room.refresh();
         }
     }
     qApplication->exit();

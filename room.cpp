@@ -5,10 +5,14 @@
 
 #include <random>
 #include <functional>
-
-#include <player.h>
-#include <item.h>
 #include <time.h>
+#include <vector>
+
+#include "player.h"
+#include "item.h"
+#include "door.h"
+
+using namespace std;
 
 Room::Room(QGraphicsScene *scene, Player *player, bool roomNorth, bool roomEast, bool roomSouth, bool roomWest) {
     this->player = player;
@@ -20,6 +24,7 @@ Room::Room(QGraphicsScene *scene, Player *player, bool roomNorth, bool roomEast,
     this->roomWest = roomWest;
 
     this->createEntities();
+    this->createDoors();
 }
 
 void Room::createEntities() {
@@ -40,6 +45,14 @@ void Room::createEntities() {
     //mt19937 engine(seed);
     //this->items.push_back(new Item(dist(engine), dist(engine) % 550 ));
 
+    createDoors();
+}
+
+void Room::createDoors() {
+    if (this->roomNorth) this->items.push_back(new Door(0));
+    if (this->roomEast) this->items.push_back(new Door(1));
+    if (this->roomSouth) this->items.push_back(new Door(2));
+    if (this->roomWest) this->items.push_back(new Door(3));
 }
 
 void Room::handleCollisions() {
@@ -56,8 +69,6 @@ void Room::draw() {
     player->setPos(350, 600 - 250);
     player->draw();
     for(auto & item: this->items) {
-        qDebug() << "Iteration" <<endl;
-
         this->scene->addItem(item);
         item->draw();
     }

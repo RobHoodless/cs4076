@@ -31,7 +31,7 @@ Map::Map() {
         rooms[i][baseRoomPosition] = true;
         roomPositions[i] = baseRoomPosition;
         activeY = GRID_HEIGHT - 1;
-        activeX = roomPositions[GRID_HEIGHT - 1];
+        activeX = roomPositions[GRID_WIDTH - 1];
     }
 
     /* Connect base rooms */
@@ -51,8 +51,6 @@ Map::Map() {
 }
 
 void Map::printMap() {
-    qDebug() << "Width: " << GRID_WIDTH << " | Height: " << GRID_HEIGHT << "\n";
-    qDebug() << "O = Room | # = Not a room" << "\n";
     for (int i = 0; i < GRID_HEIGHT; i++) {
         QString row = "";
         for (int j = 0; j < GRID_WIDTH; j++) {
@@ -65,6 +63,9 @@ void Map::printMap() {
         qDebug() << row;
     }
     qDebug() << endl;
+
+    qDebug() << "X: " << this->activeX;
+    qDebug() << "Y: " << this->activeY;
 }
 
 int Map::getActiveX() {
@@ -75,18 +76,17 @@ int Map::getActiveY() {
     return activeY;
 }
 
-// TODO The logic in this is broken
 void Map::getNeighbourRooms(bool* nesw) {
     if ((activeY - 1) >= 0 && rooms[activeY-1][activeX]) { // North
         nesw[0] = true;
     }
-    if ((activeY + 1) < GRID_WIDTH && rooms[activeX][activeY+1]) { // East
+    if ((activeX + 1) < GRID_WIDTH && rooms[activeY][activeX+1]) { // East
         nesw[1] = true;
     }
-    if ((activeX + 1) < GRID_HEIGHT && rooms[activeX+1][activeY]) { // South
+    if ((activeY + 1) < GRID_HEIGHT && rooms[activeY+1][activeX]) { // South
         nesw[2] = true;
     }
-    if ((activeY - 1) >= 0 && rooms[activeX][activeY-1]) { // West
+    if ((activeX - 1) >= 0 && rooms[activeY][activeX-1]) { // West
         nesw[3] = true;
     }
 }
