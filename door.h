@@ -10,7 +10,8 @@ public:
     //Player obtainedBy();
     void handleCollision(Player *player);
     void draw();
-    //int isActivated(); //returns direction room was exited
+    int isActivated(); //returns direction room was exited
+    int getDirection();
 
 private:
     const int NORTH = 0;
@@ -18,7 +19,7 @@ private:
     const int SOUTH = 2;
     const int WEST = 3;
     int direction;
-    int *exited = nullptr;
+    int exited = -1;
 };
 
 #endif // DOOR_H

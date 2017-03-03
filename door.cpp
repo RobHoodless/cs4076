@@ -31,5 +31,13 @@ void Door::draw() {
 }
 
 void Door::handleCollision(Player *player) {
-    qDebug() << "Entered " << this->direction;
+    this->exited = this->direction;
+}
+
+int Door::isActivated() {
+    return this->exited;
+}
+
+int Door::getDirection() {
+    return this->direction;
 }

@@ -16,15 +16,15 @@ Map::Map() {
 
     for (int i = 0; i < GRID_HEIGHT; i++) {
         vector<bool> xRooms;
-        rooms.push_back(xRooms);
         for (int j = 0; j < GRID_WIDTH; j++) {
-            xRooms.push_back(false);
+            xRooms.push_back(0);
         }
+        rooms.push_back(xRooms);
     }
 
     vector<int> roomPositions(GRID_HEIGHT, -1);
 
-    /* Populate base room for each floor */
+    /* Populate initial room for each floor */
     for (int i = 0; i < GRID_HEIGHT; i++) {
         int baseRoomPosition = rand() % GRID_WIDTH;
 
@@ -90,3 +90,7 @@ void Map::getNeighbourRooms(bool* nesw) {
         nesw[3] = true;
     }
 }
+
+//Map::getNeighbourRooms() {
+//    return this->rooms;
+//}

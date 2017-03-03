@@ -5,10 +5,11 @@
 
 #include <vector>
 
-#include <entity.h>
-#include <stationaryentity.h>
-#include <mobileentity.h>
-#include <player.h>
+#include "entity.h"
+#include "stationaryentity.h"
+#include "mobileentity.h"
+#include "player.h"
+#include "door.h"
 
 using namespace std;
 
@@ -25,9 +26,11 @@ public:
     bool getRoomEast();
     bool getRoomSouth();
     bool getRoomWest();
+    int checkDoors();
 
 private:
     vector<StationaryEntity *> items;
+    vector<Door *> doors;
     QGraphicsScene *scene;
     Player *player;
     vector<MobileEntity> enemies;

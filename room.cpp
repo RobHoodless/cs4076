@@ -49,14 +49,31 @@ void Room::createEntities() {
 }
 
 void Room::createDoors() {
-    if (this->roomNorth) this->items.push_back(new Door(0));
-    if (this->roomEast) this->items.push_back(new Door(1));
-    if (this->roomSouth) this->items.push_back(new Door(2));
-    if (this->roomWest) this->items.push_back(new Door(3));
+    if (this->roomNorth) {
+        Door * doorPtr = new Door(0);
+        this->items.push_back(doorPtr);
+        this->doors.push_back(doorPtr);
+    }
+    if (this->roomEast) {
+        Door * doorPtr = new Door(1);
+        this->items.push_back(doorPtr);
+        this->doors.push_back(doorPtr);
+    }
+    if (this->roomSouth) {
+        Door * doorPtr = new Door(2);
+        this->items.push_back(doorPtr);
+        this->doors.push_back(doorPtr);
+    }
+    if (this->roomWest) {
+        Door * doorPtr = new Door(3);
+        this->items.push_back(doorPtr);
+        this->doors.push_back(doorPtr);
+    }
 }
 
 void Room::handleCollisions() {
     this->player->handleCollisions();
+    this->checkDoors();
 }
 
 void Room::refresh() {
@@ -88,4 +105,12 @@ bool Room::getRoomSouth() {
 
 bool Room::getRoomWest() {
     return roomWest;
+}
+
+int Room::checkDoors() {
+    for (int i = 0; i < doors.size(); i++) {
+        if (doors[i]->isActivated() >= 0) {
+            qDebug() << doors[i]->getDirection();
+        }
+    }
 }

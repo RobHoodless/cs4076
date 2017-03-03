@@ -47,10 +47,7 @@ void Player::keyPressEvent(QKeyEvent *event) {
     processKeys();
 }
 
-
-
 void Player::processKeys() {
-
     if(keysPressed.contains(Qt::Key_W)) {
         movingNorth = true;
         numSteps++;
