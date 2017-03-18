@@ -16,17 +16,16 @@ using namespace std;
 class Room {
 public:
     Room(QGraphicsScene *scene, Player *player, bool roomNorth, bool roomEast, bool roomSouth, bool roomWest);
+    ~Room();
     void draw();
     void refresh(); //redraw all mobile entities.
     void moveEntities(); //Move all mobile entities.
     bool isComplete();
     int getNextDirection();
-    void tearDown();
     bool getRoomNorth();
     bool getRoomEast();
     bool getRoomSouth();
     bool getRoomWest();
-    int checkDoors();
 
 private:
     vector<StationaryEntity *> items;
@@ -40,10 +39,10 @@ private:
     long roomId; //used to get room details from JSON rooms info.
     void loadEntities(); //draw all entities in room
     int nextDirection;
-    bool roomNorth;
-    bool roomEast;
-    bool roomSouth;
-    bool roomWest;
+    bool roomNorth = false;
+    bool roomEast = false;
+    bool roomSouth = false;
+    bool roomWest = false;
 };
 
 #endif // ROOM_H

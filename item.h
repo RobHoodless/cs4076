@@ -10,6 +10,7 @@ public:
     Item(int initialX, int initialY);
     void draw();
     void handleCollision(Player *player);
+    bool isDeleted();
 
 private:
     int initialX = 0;

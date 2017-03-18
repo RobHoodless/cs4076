@@ -3,23 +3,20 @@
 
 #include "player.h"
 #include "stationaryentity.h"
+#include "map.h"
 
 class Door : public StationaryEntity {
 public:
-    Door(int direction); // N:0, E:1, S:2, W:3
+    Door(Direction direction);
     //Player obtainedBy();
     void handleCollision(Player *player);
     void draw();
-    int isActivated(); //returns direction room was exited
-    int getDirection();
+    bool isExited(); //returns true if player collided with door
+    Direction getDirection();
 
 private:
-    const int NORTH = 0;
-    const int EAST = 1;
-    const int SOUTH = 2;
-    const int WEST = 3;
-    int direction;
-    int exited = -1;
+    bool exited = false;
+    Direction direction;
 };
 
 #endif // DOOR_H

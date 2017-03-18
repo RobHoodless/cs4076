@@ -2,27 +2,27 @@
 
 #include <QDebug>
 
-Door::Door(int direction) {
+Door::Door(Direction direction) {
     this->direction = direction;
 }
 
 void Door::draw() {
-    if (direction == 0) { // North
+    if (direction == NORTH) {
         spriteSheet = new QImage(":images/door_horizontal.png");
         sprite = QPixmap::fromImage(spriteSheet->copy(0, 0, 100, 50));
         setPixmap(sprite);
         setPos(350, 0);
-    } else if (direction == 1) { // East
+    } else if (direction == EAST) {
         spriteSheet = new QImage(":/images/door.png");
         sprite = QPixmap::fromImage(spriteSheet->copy(0, 0, 50, 100));
         setPixmap(sprite);
         setPos(750, 175);
-    } else if (direction == 2) { // South
+    } else if (direction == SOUTH) {
         spriteSheet = new QImage(":images/door_horizontal.png");
         sprite = QPixmap::fromImage(spriteSheet->copy(0, 0, 100, 50));
         setPixmap(sprite);
-        setPos(400, 450);
-    } else { // West
+        setPos(400, 400);
+    } else if (direction == WEST) {
         spriteSheet = new QImage(":/images/door.png");
         sprite = QPixmap::fromImage(spriteSheet->copy(0, 0, 50, 100));
         setPixmap(sprite);
@@ -31,13 +31,13 @@ void Door::draw() {
 }
 
 void Door::handleCollision(Player *player) {
-    this->exited = this->direction;
+    this->exited = true;
 }
 
-int Door::isActivated() {
+bool Door::isExited() {
     return this->exited;
 }
 
-int Door::getDirection() {
+Direction Door::getDirection() {
     return this->direction;
 }

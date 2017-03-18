@@ -7,6 +7,7 @@
 #include <functional>
 #include <time.h>
 #include <vector>
+#include <algorithm>
 
 #include "player.h"
 #include "item.h"
@@ -15,6 +16,7 @@
 using namespace std;
 
 Room::Room(QGraphicsScene *scene, Player *player, bool roomNorth, bool roomEast, bool roomSouth, bool roomWest) {
+    qDebug() << "Creating room";
     this->player = player;
     this->scene = scene;
 
@@ -24,7 +26,15 @@ Room::Room(QGraphicsScene *scene, Player *player, bool roomNorth, bool roomEast,
     this->roomWest = roomWest;
 
     this->createEntities();
-    this->createDoors();
+}
+
+Room::~Room() {
+    qDebug() << "Deleting room";
+
+    for (auto &item: this->items) {
+        // This doesn't work if item is already deleted
+//        this->scene->removeItem(item);
+    }
 }
 
 void Room::createEntities() {
@@ -37,7 +47,8 @@ void Room::createEntities() {
 
     //x coord will be under 750, enforce y coord under 550 to make sure the whole diamond is in view.
     for(int i = 0; i < 5; i++) {
-        this->items.push_back(new Item(rand_coord_func_partial(), rand_coord_func_partial() % 400 ));
+        Item *itemPtr = new Item(rand_coord_func_partial(), rand_coord_func_partial() % 400);
+        this->items.push_back(itemPtr);
     }
     //NOTE:
     //Non functional version would be:
@@ -50,30 +61,33 @@ void Room::createEntities() {
 
 void Room::createDoors() {
     if (this->roomNorth) {
-        Door * doorPtr = new Door(0);
-        this->items.push_back(doorPtr);
+        qDebug() << "Neighbour north";
+        Door * doorPtr = new Door(NORTH);
         this->doors.push_back(doorPtr);
+        this->items.push_back(doorPtr);
     }
     if (this->roomEast) {
-        Door * doorPtr = new Door(1);
-        this->items.push_back(doorPtr);
+        qDebug() << "Neighbour east";
+        Door * doorPtr = new Door(EAST);
         this->doors.push_back(doorPtr);
+        this->items.push_back(doorPtr);
     }
     if (this->roomSouth) {
-        Door * doorPtr = new Door(2);
-        this->items.push_back(doorPtr);
+        qDebug() << "Neighbour south";
+        Door * doorPtr = new Door(SOUTH);
         this->doors.push_back(doorPtr);
+        this->items.push_back(doorPtr);
     }
     if (this->roomWest) {
-        Door * doorPtr = new Door(3);
-        this->items.push_back(doorPtr);
+        qDebug() << "Neighbour west";
+        Door * doorPtr = new Door(WEST);
         this->doors.push_back(doorPtr);
+        this->items.push_back(doorPtr);
     }
 }
 
 void Room::handleCollisions() {
     this->player->handleCollisions();
-    this->checkDoors();
 }
 
 void Room::refresh() {
@@ -83,8 +97,9 @@ void Room::refresh() {
 }
 
 void Room::draw() {
-    player->setPos(350, 600 - 250);
+    player->setPos(350, 600 - 400);
     player->draw();
+
     for(auto & item: this->items) {
         this->scene->addItem(item);
         item->draw();
@@ -92,25 +107,25 @@ void Room::draw() {
 }
 
 bool Room::getRoomNorth() {
-    return roomNorth;
+    return this->roomNorth;
 }
 
 bool Room::getRoomEast() {
-    return roomEast;
+    return this->roomEast;
 }
 
 bool Room::getRoomSouth() {
-    return roomSouth;
+    return this->roomSouth;
 }
 
 bool Room::getRoomWest() {
-    return roomWest;
+    return this->roomWest;
 }
 
-int Room::checkDoors() {
-    for (int i = 0; i < doors.size(); i++) {
-        if (doors[i]->isActivated() >= 0) {
-            qDebug() << doors[i]->getDirection();
-        }
+int Room::getNextDirection() {
+    for(auto & door: this->doors) {
+        if (door->isExited()) return door->getDirection();
     }
+
+    return -1;
 }

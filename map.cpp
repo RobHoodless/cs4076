@@ -1,8 +1,10 @@
 #include <QCoreApplication>
 #include <QDebug>
 #include <QtDebug>
+#include <QString>
 #include <time.h>
 #include <vector>
+#include <iostream>
 
 #include "map.h"
 
@@ -64,8 +66,8 @@ void Map::printMap() {
     }
     qDebug() << endl;
 
-    qDebug() << "X: " << this->activeX;
-    qDebug() << "Y: " << this->activeY;
+    qDebug() << "Current Co-ordinates";
+    qDebug() << "X: " << this->activeX << " | Y: " << this->activeY;
 }
 
 int Map::getActiveX() {
@@ -91,6 +93,25 @@ void Map::getNeighbourRooms(bool* nesw) {
     }
 }
 
-//Map::getNeighbourRooms() {
-//    return this->rooms;
-//}
+void Map::changeActiveRoom(Direction direction) {
+    if (direction == NORTH) this->goNorth();
+    else if (direction == EAST) this->goEast();
+    else if (direction == SOUTH) this->goSouth();
+    else if (direction == WEST) this->goWest();
+}
+
+inline void Map::goNorth() {
+    this->activeY -= 1;
+}
+
+inline void Map::goEast() {
+    this->activeX += 1;
+}
+
+inline void Map::goSouth() {
+    this->activeY += 1;
+}
+
+inline void Map::goWest() {
+    this->activeX -= 1;
+}

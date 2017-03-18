@@ -19,6 +19,9 @@ Player::Player(int maxX, int maxY) {
     this->maxX = maxX - 100;
     this->maxY = maxY - 100;
 
+    // Make player focusable
+    this->setFlag(QGraphicsItem::ItemIsFocusable);
+    this->setFocus();
 }
 
 void Player::keyReleaseEvent(QKeyEvent *event) {
@@ -43,7 +46,6 @@ void Player::keyReleaseEvent(QKeyEvent *event) {
 
 void Player::keyPressEvent(QKeyEvent *event) {
     keysPressed += event->key();
-    qDebug() << "key press called" <<endl;
     processKeys();
 }
 

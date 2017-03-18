@@ -40,19 +40,15 @@ void Game::run() {
     // Add the view needed to visualise the scene.
     view = new GameView(scene, player);
 
-    //make player focusable
-    player->setFlag(QGraphicsItem::ItemIsFocusable);
-    player->setFocus();
-
     Map map;
     map.printMap();
 
     bool neighbourRooms[] = {false, false, false, false};
     map.getNeighbourRooms(neighbourRooms);
-    Room room(scene, player, neighbourRooms[0],neighbourRooms[1],neighbourRooms[2],neighbourRooms[3]);
+    Room *room = new Room(scene, player, neighbourRooms[0],neighbourRooms[1],neighbourRooms[2],neighbourRooms[3]);
 
     //draw the room onscreen.
-    room.draw();
+    room->draw();
 
     view->show();
 
@@ -73,7 +69,20 @@ void Game::run() {
         if (time_counter > (double)(NUM_SECONDS * CLOCKS_PER_SEC)) {
             time_counter -= (double)(NUM_SECONDS * CLOCKS_PER_SEC);
             count++;
-            room.refresh();
+            room->refresh();
+        }
+
+        // If player has collided with a door, ie. Moving to a neighbour room
+        if (room->getNextDirection() >= 0) {
+            map.changeActiveRoom(static_cast<Direction>(room->getNextDirection()));
+
+            bool neighbourRooms[] = {false, false, false, false};
+            map.getNeighbourRooms(neighbourRooms);
+
+            delete room;
+            room = new Room(scene, player, neighbourRooms[0],neighbourRooms[1],neighbourRooms[2],neighbourRooms[3]);
+
+            room->draw();
         }
     }
     qApplication->exit();
