@@ -1,6 +1,5 @@
 #include "stationaryentity.h"
 
-StationaryEntity::StationaryEntity()
-{
+StationaryEntity::StationaryEntity() {
 
 }

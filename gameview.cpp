@@ -1,19 +1,20 @@
 #include "gameview.h"
+
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QDebug>
 #include <QKeyEvent>
 
-#include <player.h>
+#include "player.h"
 
 using namespace std;
 
 GameView::GameView(QGraphicsScene *scene, Player *player): QGraphicsView(scene) {
     this->player = player;
-    }
+}
 
 void GameView::keyPressEvent(QKeyEvent *event) {
-    if(event->key() == Qt::Key_Escape) {
+    if (event->key() == Qt::Key_Escape) {
         this->paused = true;
     }
 
@@ -23,7 +24,7 @@ void GameView::keyPressEvent(QKeyEvent *event) {
 
 }
 
-bool GameView::isPaused() { //make this function inline.
+bool GameView::isPaused() const {
     return this->paused;
 }
 

@@ -2,6 +2,7 @@
 
 #include <QImage>
 #include <QPixmap>
+#include <QDebug>
 
 Item::Item() {
     spriteSheet = new QImage(":/images/diamond.png");
@@ -12,6 +13,10 @@ Item::Item() {
 Item::Item(int initialX, int initialY) : Item() {
     this->initialX = initialX;
     this->initialY = initialY;
+}
+
+Item::~Item() {
+    qDebug() << "Deleting item";
 }
 
 void Item::draw() {

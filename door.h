@@ -11,8 +11,8 @@ public:
     //Player obtainedBy();
     void handleCollision(Player *player);
     void draw();
-    bool isExited(); //returns true if player collided with door
-    Direction getDirection();
+    bool isExited() const; //returns true if player collided with door
+    Direction getDirection() const;
 
 private:
     bool exited = false;

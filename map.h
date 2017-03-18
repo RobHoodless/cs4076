@@ -10,11 +10,11 @@ enum Direction {NORTH = 0, EAST, SOUTH, WEST};
 class Map {
 public:
     Map();
-    int getActiveX();
-    int getActiveY();
+    int getActiveX() const;
+    int getActiveY() const;
     void changeActiveRoom(Direction direction);
-    void printMap();
-    void getNeighbourRooms(bool* directions);
+    void printMap() const;
+    void getNeighbourRooms(bool* directions) const;
 
 private:
     int activeX;

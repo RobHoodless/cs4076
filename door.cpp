@@ -34,10 +34,10 @@ void Door::handleCollision(Player *player) {
     this->exited = true;
 }
 
-bool Door::isExited() {
+bool Door::isExited() const {
     return this->exited;
 }
 
-Direction Door::getDirection() {
+Direction Door::getDirection() const {
     return this->direction;
 }

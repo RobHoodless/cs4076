@@ -16,6 +16,7 @@
 Game::Game(QApplication *qApplication) {
     this->qApplication = qApplication;
 }
+
 void Game::newGame() {
     run();
 }
@@ -89,7 +90,7 @@ void Game::run() {
     view->close();
 }
 
-bool Game::isPaused() {
+bool Game::isPaused() const {
     return this->view->isPaused();
 }
 

@@ -11,7 +11,7 @@ public:
     GameView(QGraphicsScene *scene, Player *player);
     //~GameView();
     void keyPressEvent(QKeyEvent *event);
-    bool isPaused();
+    bool isPaused() const;
 
 private:
     bool paused = false;

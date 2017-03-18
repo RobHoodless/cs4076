@@ -4,7 +4,6 @@
 #include <QString>
 #include <time.h>
 #include <vector>
-#include <iostream>
 
 #include "map.h"
 
@@ -52,33 +51,29 @@ Map::Map() {
     }
 }
 
-void Map::printMap() {
+void Map::printMap() const {
     for (int i = 0; i < GRID_HEIGHT; i++) {
         QString row = "";
         for (int j = 0; j < GRID_WIDTH; j++) {
-            if (rooms[i][j] == true) {
-                row.append("O");
-            } else {
-                row.append("#");
-            }
+            if (rooms[i][j]) row.append("O");
+            else row.append("#");
         }
         qDebug() << row;
     }
-    qDebug() << endl;
 
     qDebug() << "Current Co-ordinates";
     qDebug() << "X: " << this->activeX << " | Y: " << this->activeY;
 }
 
-int Map::getActiveX() {
+int Map::getActiveX() const {
     return activeX;
 }
 
-int Map::getActiveY() {
+int Map::getActiveY() const {
     return activeY;
 }
 
-void Map::getNeighbourRooms(bool* nesw) {
+void Map::getNeighbourRooms(bool* nesw) const {
     if ((activeY - 1) >= 0 && rooms[activeY-1][activeX]) { // North
         nesw[0] = true;
     }

@@ -15,19 +15,24 @@ using namespace std;
 
 class Room {
 public:
-    Room(QGraphicsScene *scene, Player *player, bool roomNorth, bool roomEast, bool roomSouth, bool roomWest);
+    Room(QGraphicsScene *scene, Player *player, bool neighbourNorth, bool neighbourEast, bool neighbourSouth, bool neighbourWest);
     ~Room();
-    void draw();
-    void refresh(); //redraw all mobile entities.
-    void moveEntities(); //Move all mobile entities.
-    bool isComplete();
-    int getNextDirection();
-    bool getRoomNorth();
-    bool getRoomEast();
-    bool getRoomSouth();
-    bool getRoomWest();
+    void draw() const;
+    void refresh() const; //redraw all mobile entities.
+    void moveEntities() const; //Move all mobile entities.
+    bool isComplete() const;
+    int getNextDirection() const;
+    bool getNeighbourNorth() const;
+    bool getNeighbourEast() const;
+    bool getNeighbourSouth() const;
+    bool getNeighbourWest() const;
 
 private:
+    long roomId; //used to get room details from JSON rooms info.
+    bool neighbourNorth = false;
+    bool neighbourEast = false;
+    bool neighbourSouth = false;
+    bool neighbourWest = false;
     vector<StationaryEntity *> items;
     vector<Door *> doors;
     QGraphicsScene *scene;
@@ -35,14 +40,8 @@ private:
     vector<MobileEntity> enemies;
     void createEntities();
     void createDoors();
-    void handleCollisions();
-    long roomId; //used to get room details from JSON rooms info.
+    void handleCollisions() const;
     void loadEntities(); //draw all entities in room
-    int nextDirection;
-    bool roomNorth = false;
-    bool roomEast = false;
-    bool roomSouth = false;
-    bool roomWest = false;
 };
 
 #endif // ROOM_H

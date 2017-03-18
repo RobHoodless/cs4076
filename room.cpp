@@ -7,7 +7,6 @@
 #include <functional>
 #include <time.h>
 #include <vector>
-#include <algorithm>
 
 #include "player.h"
 #include "item.h"
@@ -20,21 +19,16 @@ Room::Room(QGraphicsScene *scene, Player *player, bool roomNorth, bool roomEast,
     this->player = player;
     this->scene = scene;
 
-    this->roomNorth = roomNorth;
-    this->roomEast = roomEast;
-    this->roomSouth = roomSouth;
-    this->roomWest = roomWest;
+    this->neighbourNorth = roomNorth;
+    this->neighbourEast = roomEast;
+    this->neighbourSouth = roomSouth;
+    this->neighbourWest = roomWest;
 
     this->createEntities();
 }
 
 Room::~Room() {
     qDebug() << "Deleting room";
-
-    for (auto &item: this->items) {
-        // This doesn't work if item is already deleted
-//        this->scene->removeItem(item);
-    }
 }
 
 void Room::createEntities() {
@@ -60,25 +54,25 @@ void Room::createEntities() {
 }
 
 void Room::createDoors() {
-    if (this->roomNorth) {
+    if (this->neighbourNorth) {
         qDebug() << "Neighbour north";
         Door * doorPtr = new Door(NORTH);
         this->doors.push_back(doorPtr);
         this->items.push_back(doorPtr);
     }
-    if (this->roomEast) {
+    if (this->neighbourEast) {
         qDebug() << "Neighbour east";
         Door * doorPtr = new Door(EAST);
         this->doors.push_back(doorPtr);
         this->items.push_back(doorPtr);
     }
-    if (this->roomSouth) {
+    if (this->neighbourSouth) {
         qDebug() << "Neighbour south";
         Door * doorPtr = new Door(SOUTH);
         this->doors.push_back(doorPtr);
         this->items.push_back(doorPtr);
     }
-    if (this->roomWest) {
+    if (this->neighbourWest) {
         qDebug() << "Neighbour west";
         Door * doorPtr = new Door(WEST);
         this->doors.push_back(doorPtr);
@@ -86,17 +80,17 @@ void Room::createDoors() {
     }
 }
 
-void Room::handleCollisions() {
+void Room::handleCollisions() const {
     this->player->handleCollisions();
 }
 
-void Room::refresh() {
+void Room::refresh() const {
     this->player->move();
     this->player->refreshSprite();
     handleCollisions();
 }
 
-void Room::draw() {
+void Room::draw() const {
     player->setPos(350, 600 - 400);
     player->draw();
 
@@ -106,23 +100,23 @@ void Room::draw() {
     }
 }
 
-bool Room::getRoomNorth() {
-    return this->roomNorth;
+bool Room::getNeighbourNorth() const {
+    return this->neighbourNorth;
 }
 
-bool Room::getRoomEast() {
-    return this->roomEast;
+bool Room::getNeighbourEast() const {
+    return this->neighbourEast;
 }
 
-bool Room::getRoomSouth() {
-    return this->roomSouth;
+bool Room::getNeighbourSouth() const {
+    return this->neighbourSouth;
 }
 
-bool Room::getRoomWest() {
-    return this->roomWest;
+bool Room::getNeighbourWest() const {
+    return this->neighbourWest;
 }
 
-int Room::getNextDirection() {
+int Room::getNextDirection() const {
     for(auto & door: this->doors) {
         if (door->isExited()) return door->getDirection();
     }
