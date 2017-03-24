@@ -29,6 +29,15 @@ Room::Room(QGraphicsScene *scene, Player *player, bool roomNorth, bool roomEast,
 
 Room::~Room() {
     qDebug() << "Deleting room";
+
+    QList<QGraphicsItem*> items = this->scene->items();
+
+    for (int i = 0; i < items.size(); i++) {
+        qDebug() << items[i];
+        if (!items[i]->hasFocus()) {
+            this->scene->removeItem(items[i]);
+        }
+    }
 }
 
 void Room::createEntities() {
