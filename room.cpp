@@ -15,7 +15,6 @@
 using namespace std;
 
 Room::Room(QGraphicsScene *scene, Player *player, bool roomNorth, bool roomEast, bool roomSouth, bool roomWest) {
-    qDebug() << "Creating room";
     this->player = player;
     this->scene = scene;
 
@@ -28,8 +27,6 @@ Room::Room(QGraphicsScene *scene, Player *player, bool roomNorth, bool roomEast,
 }
 
 Room::~Room() {
-    qDebug() << "Deleting room";
-
     QList<QGraphicsItem*> items = this->scene->items();
 
     // This is extremelly hacky, to prevent removing player. Need to fix!
