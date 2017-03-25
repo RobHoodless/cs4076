@@ -14,15 +14,15 @@ public:
     Map(QGraphicsScene *scene);
     int getActiveX() const;
     int getActiveY() const;
-    void changeActiveRoom(Direction direction, QGraphicsScene *scene);
+    void changeActiveRoom(Direction direction);
     void getNeighbourRooms(bool* directions) const;
+    void printMap(QGraphicsScene *scene) const;
 
 private:
     int activeX;
     int activeY;
     vector<vector<bool>> rooms;
     void createMap();
-    void printMap(QGraphicsScene *scene) const;
     inline void goNorth();
     inline void goEast();
     inline void goSouth();

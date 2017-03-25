@@ -81,11 +81,11 @@ void Map::printMap(QGraphicsScene *scene) const {
 }
 
 int Map::getActiveX() const {
-    return activeX;
+    return this->activeX;
 }
 
 int Map::getActiveY() const {
-    return activeY;
+    return this->activeY;
 }
 
 void Map::getNeighbourRooms(bool* nesw) const {
@@ -103,13 +103,11 @@ void Map::getNeighbourRooms(bool* nesw) const {
     }
 }
 
-void Map::changeActiveRoom(Direction direction, QGraphicsScene *scene) {
+void Map::changeActiveRoom(Direction direction) {
     if (direction == NORTH) this->goNorth();
     else if (direction == EAST) this->goEast();
     else if (direction == SOUTH) this->goSouth();
     else if (direction == WEST) this->goWest();
-
-    this->printMap(scene);
 }
 
 inline void Map::goNorth() {

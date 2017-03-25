@@ -74,13 +74,15 @@ void Game::run() {
 
         // If player has collided with a door, ie. Moving to a neighbour room
         if (room->getNextDirection() >= 0) {
-            map.changeActiveRoom(static_cast<Direction>(room->getNextDirection()), scene);
+            map.changeActiveRoom(static_cast<Direction>(room->getNextDirection()));
 
             bool neighbourRooms[] = {false, false, false, false};
             map.getNeighbourRooms(neighbourRooms);
 
             delete room;
             room = new Room(scene, player, neighbourRooms[0],neighbourRooms[1],neighbourRooms[2],neighbourRooms[3]);
+
+            map.printMap(scene);
 
             room->draw();
         }

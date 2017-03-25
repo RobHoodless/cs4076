@@ -32,6 +32,7 @@ Room::~Room() {
     // This is extremelly hacky, to prevent removing player. Need to fix!
     for (int i = 0; i < items.size(); i++) {
         if (!items[i]->hasFocus()) {
+            qDebug() << items[i];
             this->scene->removeItem(items[i]);
         }
     }
