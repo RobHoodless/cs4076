@@ -3,5 +3,6 @@
         <file>diamond.png</file>
         <file>dragon.png</file>
         <file>background.png</file>
+        <file>enemy.png</file>
     </qresource>
 </RCC>

@@ -3,14 +3,15 @@
 
 #include <player.h>
 #include <string>
+#include <collidableentity.h>
 
 using namespace std;
 
-class StationaryEntity : public Entity
+class StationaryEntity : public Entity, public CollidableEntity
 {
 public:
     StationaryEntity();
-    virtual void handleCollision(Player *player) = 0;
+
 
 protected:
     string imagePath = "";

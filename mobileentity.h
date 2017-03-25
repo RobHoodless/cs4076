@@ -4,8 +4,7 @@
 #include <QPixmap>
 #include <entity.h>
 
-class MobileEntity : public Entity
-{
+class MobileEntity : public Entity {
 public:
     MobileEntity();
     virtual void move() = 0;

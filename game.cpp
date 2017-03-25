@@ -12,6 +12,9 @@
 #include <item.h>
 #include <gameview.h>
 
+#include <unistd.h>
+
+
 
 Game::Game(QApplication *qApplication) {
     this->qApplication = qApplication;

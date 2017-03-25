@@ -4,6 +4,7 @@
 #include <QDebug>
 
 #include <item.h>
+#include <collidableentity.h>
 
 Player::Player(int maxX, int maxY) {
 
@@ -119,7 +120,7 @@ void Player::refreshSprite() {
 void Player::handleCollisions() {
     QList<QGraphicsItem *> colItems = collidingItems();
     for(auto & entity: colItems) {
-       Item * itemEntity = dynamic_cast<Item*>(entity);
+       CollidableEntity * itemEntity = dynamic_cast<CollidableEntity*>(entity);
        itemEntity->handleCollision(this);
     }
 }

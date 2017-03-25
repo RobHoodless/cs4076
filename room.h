@@ -9,6 +9,7 @@
 #include <stationaryentity.h>
 #include <mobileentity.h>
 #include <player.h>
+#include <item.h>
 
 using namespace std;
 
@@ -19,19 +20,21 @@ public:
     void refresh(); //redraw all mobile entities.
     void moveEntities(); //Move all mobile entities.
     bool isComplete();
+    bool isExited();
     int getNextDirection();
     void tearDown();
 
 private:
-    vector<StationaryEntity *> items;
+    vector<Item *> items;
     QGraphicsScene *scene;
     Player *player;
-    vector<MobileEntity> enemies;
+    vector<MobileEntity *> enemies;
     void createEntities();
     void handleCollisions();
     long roomId; //used to get room details from JSON rooms info.
     void loadEntities(); //draw all entities in room
     int nextDirection;
+    bool exited = false;
 };
 
 #endif // ROOM_H
