@@ -38,11 +38,10 @@ void Game::run() {
     scene->addItem(player);
     scene->setBackgroundBrush(QBrush(QImage(":/images/background.png")));
 
+    Map map(scene);
+
     // Add the view needed to visualise the scene.
     view = new GameView(scene, player);
-
-    Map map;
-    map.printMap();
 
     bool neighbourRooms[] = {false, false, false, false};
     map.getNeighbourRooms(neighbourRooms);
@@ -75,7 +74,7 @@ void Game::run() {
 
         // If player has collided with a door, ie. Moving to a neighbour room
         if (room->getNextDirection() >= 0) {
-            map.changeActiveRoom(static_cast<Direction>(room->getNextDirection()));
+            map.changeActiveRoom(static_cast<Direction>(room->getNextDirection()), scene);
 
             bool neighbourRooms[] = {false, false, false, false};
             map.getNeighbourRooms(neighbourRooms);

@@ -32,8 +32,8 @@ Room::~Room() {
 
     QList<QGraphicsItem*> items = this->scene->items();
 
+    // This is extremelly hacky, to prevent removing player. Need to fix!
     for (int i = 0; i < items.size(); i++) {
-        qDebug() << items[i];
         if (!items[i]->hasFocus()) {
             this->scene->removeItem(items[i]);
         }
@@ -64,26 +64,22 @@ void Room::createEntities() {
 
 void Room::createDoors() {
     if (this->neighbourNorth) {
-        qDebug() << "Neighbour north";
-        Door * doorPtr = new Door(NORTH);
+        Door *doorPtr = new Door(NORTH);
         this->doors.push_back(doorPtr);
         this->items.push_back(doorPtr);
     }
     if (this->neighbourEast) {
-        qDebug() << "Neighbour east";
-        Door * doorPtr = new Door(EAST);
+        Door *doorPtr = new Door(EAST);
         this->doors.push_back(doorPtr);
         this->items.push_back(doorPtr);
     }
     if (this->neighbourSouth) {
-        qDebug() << "Neighbour south";
-        Door * doorPtr = new Door(SOUTH);
+        Door *doorPtr = new Door(SOUTH);
         this->doors.push_back(doorPtr);
         this->items.push_back(doorPtr);
     }
     if (this->neighbourWest) {
-        qDebug() << "Neighbour west";
-        Door * doorPtr = new Door(WEST);
+        Door *doorPtr = new Door(WEST);
         this->doors.push_back(doorPtr);
         this->items.push_back(doorPtr);
     }

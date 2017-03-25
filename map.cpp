@@ -1,4 +1,5 @@
 #include <QCoreApplication>
+#include <QGraphicsScene>
 #include <QDebug>
 #include <QtDebug>
 #include <QString>
@@ -12,7 +13,12 @@ using namespace std;
 static const int GRID_HEIGHT = 5;
 static const int GRID_WIDTH = 5;
 
-Map::Map() {
+Map::Map(QGraphicsScene *scene) {
+    this->createMap();
+    this->printMap(scene);
+}
+
+void Map::createMap() {
     srand(time(NULL));
 
     for (int i = 0; i < GRID_HEIGHT; i++) {
@@ -51,18 +57,27 @@ Map::Map() {
     }
 }
 
-void Map::printMap() const {
-    for (int i = 0; i < GRID_HEIGHT; i++) {
-        QString row = "";
-        for (int j = 0; j < GRID_WIDTH; j++) {
-            if (rooms[i][j]) row.append("O");
-            else row.append("#");
-        }
-        qDebug() << row;
-    }
+// This doesn't update when moving to a new room, need to fix
+void Map::printMap(QGraphicsScene *scene) const {
+    const int ROOM_SIZE = 20;
 
-    qDebug() << "Current Co-ordinates";
-    qDebug() << "X: " << this->activeX << " | Y: " << this->activeY;
+    int x = 650;
+    int y = 475;
+
+    for (int i = 0; i < GRID_HEIGHT; i++) {
+        for (int j = 0; j < GRID_WIDTH; j++) {
+            if (rooms[i][j]) {
+                if (i == this->activeY && j == this->activeX) {
+                    scene->addRect(x, y, ROOM_SIZE, ROOM_SIZE, QPen(QColor(255, 0, 0)));
+                } else {
+                    scene->addRect(x, y, ROOM_SIZE, ROOM_SIZE, QPen(QColor(255, 255, 255)));
+                }
+            }
+            x += 20;
+        }
+        x = 650;
+        y += 20;
+    }
 }
 
 int Map::getActiveX() const {
@@ -88,11 +103,13 @@ void Map::getNeighbourRooms(bool* nesw) const {
     }
 }
 
-void Map::changeActiveRoom(Direction direction) {
+void Map::changeActiveRoom(Direction direction, QGraphicsScene *scene) {
     if (direction == NORTH) this->goNorth();
     else if (direction == EAST) this->goEast();
     else if (direction == SOUTH) this->goSouth();
     else if (direction == WEST) this->goWest();
+
+    this->printMap(scene);
 }
 
 inline void Map::goNorth() {

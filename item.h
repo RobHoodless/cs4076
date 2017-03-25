@@ -8,7 +8,6 @@ class Item : public StationaryEntity {
 public:
     Item();
     Item(int initialX, int initialY);
-    ~Item();
     void draw();
     void handleCollision(Player *player);
 

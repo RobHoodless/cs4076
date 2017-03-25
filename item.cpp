@@ -15,10 +15,6 @@ Item::Item(int initialX, int initialY) : Item() {
     this->initialY = initialY;
 }
 
-Item::~Item() {
-    qDebug() << "Deleting item";
-}
-
 void Item::draw() {
     setPos(this->initialX, this->initialY);
 }
