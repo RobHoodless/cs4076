@@ -1,7 +1,7 @@
 #ifndef STATIONARYENTITY_H
 #define STATIONARYENTITY_H
 
-#include <player.h>
+#include "player.h"
 #include <string>
 #include <collidableentity.h>
 

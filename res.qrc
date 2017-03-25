@@ -4,5 +4,11 @@
         <file>dragon.png</file>
         <file>background.png</file>
         <file>enemy.png</file>
+        <file>full_room.png</file>
+        <file>horizontal.png</file>
+        <file>new_room.png</file>
+        <file>vertical.png</file>
+        <file>door.png</file>
+        <file>door_horizontal.png</file>
     </qresource>
 </RCC>

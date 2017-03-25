@@ -5,17 +5,37 @@
 
 #include <random>
 #include <functional>
-
-#include <player.h>
-#include <item.h>
 #include <time.h>
 #include <enemy.h>
+#include <vector>
 
-Room::Room(QGraphicsScene *scene, Player *player, bool roomNorth, bool roomSouth, bool roomEast, bool roomWest) {
+#include "player.h"
+#include "item.h"
+#include "door.h"
+
+using namespace std;
+
+Room::Room(QGraphicsScene *scene, Player *player, bool roomNorth, bool roomEast, bool roomSouth, bool roomWest) {
     this->player = player;
     this->scene = scene;
 
+    this->neighbourNorth = roomNorth;
+    this->neighbourEast = roomEast;
+    this->neighbourSouth = roomSouth;
+    this->neighbourWest = roomWest;
+
     this->createEntities();
+}
+
+Room::~Room() {
+    QList<QGraphicsItem*> items = this->scene->items();
+
+    // This is extremelly hacky, to prevent removing player. Need to fix!
+    for (int i = 0; i < items.size(); i++) {
+        if (!items[i]->hasFocus()) {
+            this->scene->removeItem(items[i]);
+        }
+    }
 }
 
 void Room::createEntities() {
@@ -28,7 +48,8 @@ void Room::createEntities() {
 
     //x coord will be under 750, enforce y coord under 550 to make sure the whole diamond is in view.
     for(int i = 0; i < 5; i++) {
-        this->items.push_back(new Item(rand_coord_func_partial(), rand_coord_func_partial() % 550 ));
+        Item *itemPtr = new Item(rand_coord_func_partial(), rand_coord_func_partial() % 400);
+        this->items.push_back(itemPtr);
     }
 
     for(int i = 0; i < 2; i++) {
@@ -40,25 +61,50 @@ void Room::createEntities() {
     //mt19937 engine(seed);
     //this->items.push_back(new Item(dist(engine), dist(engine) % 550 ));
 
+    createDoors();
 }
 
-void Room::handleCollisions() {
+void Room::createDoors() {
+    if (this->neighbourNorth) {
+        Door *doorPtr = new Door(NORTH);
+        this->doors.push_back(doorPtr);
+        this->items.push_back(doorPtr);
+    }
+    if (this->neighbourEast) {
+        Door *doorPtr = new Door(EAST);
+        this->doors.push_back(doorPtr);
+        this->items.push_back(doorPtr);
+    }
+    if (this->neighbourSouth) {
+        Door *doorPtr = new Door(SOUTH);
+        this->doors.push_back(doorPtr);
+        this->items.push_back(doorPtr);
+    }
+    if (this->neighbourWest) {
+        Door *doorPtr = new Door(WEST);
+        this->doors.push_back(doorPtr);
+        this->items.push_back(doorPtr);
+    }
+}
+
+void Room::handleCollisions() const {
     this->player->handleCollisions();
 }
 
-void Room::refresh() {
+void Room::refresh() const {
     this->player->move();
     this->player->refreshSprite();
     handleCollisions();
 }
 
-void Room::draw() {
-    player->setPos(400, 500);
+void Room::draw() const {
+    player->setPos(350, 600 - 400);
     player->draw();
     for(auto & enemy: this->enemies) {
         this->scene->addItem(enemy);
         enemy->draw();
     }
+
     for(auto & item: this->items) {
         this->scene->addItem(item);
         item->draw();
@@ -71,4 +117,27 @@ bool Room::isExited() {
 
 int Room::getNextDirection() {
     return nextDirection;
+
+bool Room::getNeighbourNorth() const {
+    return this->neighbourNorth;
+}
+
+bool Room::getNeighbourEast() const {
+    return this->neighbourEast;
+}
+
+bool Room::getNeighbourSouth() const {
+    return this->neighbourSouth;
+}
+
+bool Room::getNeighbourWest() const {
+    return this->neighbourWest;
+}
+
+int Room::getNextDirection() const {
+    for(auto & door: this->doors) {
+        if (door->isExited()) return door->getDirection();
+    }
+
+    return -1;
 }

@@ -1,6 +1,5 @@
 #include "mobileentity.h"
 
-MobileEntity::MobileEntity()
-{
+MobileEntity::MobileEntity() {
 
 }

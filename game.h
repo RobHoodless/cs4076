@@ -10,8 +10,8 @@ class Game{
 public:
     Game(QApplication *qApplcation);
     void newGame();
-    bool isFinished();
-    bool isPaused();
+    bool isFinished() const;
+    bool isPaused() const;
     //void loadGame(string filePath);
 
 private:

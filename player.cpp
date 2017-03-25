@@ -5,9 +5,9 @@
 
 #include <item.h>
 #include <collidableentity.h>
+#include "item.h"
 
 Player::Player(int maxX, int maxY) {
-
     //perhaps what I want is a sprite sheet location that has the path in string form for the image from which to generate the qimage
     spriteSheet = new QImage(":/images/dragon.png");
     standing = QPixmap::fromImage(spriteSheet->copy(0, 0, 100, 100));
@@ -20,22 +20,24 @@ Player::Player(int maxX, int maxY) {
     this->maxX = maxX - 100;
     this->maxY = maxY - 100;
 
+    // Make player focusable
+    this->setFlag(QGraphicsItem::ItemIsFocusable);
+    this->setFocus();
 }
 
 void Player::keyReleaseEvent(QKeyEvent *event) {
     keysPressed -= event->key();
 
-    if(event->key() == Qt::Key_W) {
+    if (event->key() == Qt::Key_W) {
         movingNorth = false;
     }
-    if(event->key() == Qt::Key_A){
+    if (event->key() == Qt::Key_A){
         movingWest = false;
     }
-
-    if(event->key() == Qt::Key_D) {
+    if (event->key() == Qt::Key_D) {
         movingEast = false;
     }
-    if(event->key() == Qt::Key_S) {
+    if (event->key() == Qt::Key_S) {
         movingSouth = false;
     }
 
@@ -44,27 +46,23 @@ void Player::keyReleaseEvent(QKeyEvent *event) {
 
 void Player::keyPressEvent(QKeyEvent *event) {
     keysPressed += event->key();
-    qDebug() << "key press called" <<endl;
     processKeys();
 }
 
-
-
 void Player::processKeys() {
-
-    if(keysPressed.contains(Qt::Key_W)) {
+    if (keysPressed.contains(Qt::Key_W)) {
         movingNorth = true;
         numSteps++;
     }
-    if(keysPressed.contains(Qt::Key_A)){
+    if (keysPressed.contains(Qt::Key_A)){
         movingWest = true;
         numSteps++;
     }
-    if(keysPressed.contains(Qt::Key_D) ) {
+    if (keysPressed.contains(Qt::Key_D) ) {
         movingEast = true;
         numSteps++;
     }
-    if(keysPressed.contains(Qt::Key_S) ) {
+    if (keysPressed.contains(Qt::Key_S) ) {
         movingSouth = true;
         numSteps++; //increment this in the move function eventually
     }
@@ -77,34 +75,34 @@ void Player::draw() {
 }
 
 void Player::move() {
-    if(movingWest) {
+    if (movingWest) {
         //10 can be replaced with a variable if we want to implement
         //a speed attribute.
         int nextX = ((((this->x() - 10)) < 0) ? 0 : (this->x() - 10));
         this->setPos(nextX, this->y());
-        if(numSteps % 2 == 0) {
+        if (numSteps % 2 == 0) {
             nextSprite = walkingTransition;
         }
         else {
             nextSprite = walkingFull;
         }
     }
-    if(movingEast) {
+    if (movingEast) {
         int nextX = ((((this->x() + 10)) > this->maxX) ? this->maxX : (this->x() + 10));
         this->setPos(nextX, this->y());
         //Need to figure out better way to alternate walking animation.
-        if(numSteps % 2 == 0) {
+        if (numSteps % 2 == 0) {
             nextSprite = walkingTransition;
         }
         else {
             nextSprite = walkingFull;
         }
     }
-    if(movingNorth) {
+    if (movingNorth) {
         int nextY = ((((this->y() - 10)) < 0) ? 0 : (this->y() - 10));
         this->setPos(this->x(), nextY);
     }
-    if(movingSouth) {
+    if (movingSouth) {
         int nextY = ((this->y() + 10) > this->maxY) ? this->maxY : this->y() + 10;
         this->setPos(this->x(), nextY);
 
@@ -116,11 +114,11 @@ void Player::refreshSprite() {
     return;
 }
 
-
 void Player::handleCollisions() {
     QList<QGraphicsItem *> colItems = collidingItems();
     for(auto & entity: colItems) {
        CollidableEntity * itemEntity = dynamic_cast<CollidableEntity*>(entity);
+       //StationaryEntity * itemEntity = dynamic_cast<StationaryEntity*>(entity);
        itemEntity->handleCollision(this);
     }
 }
