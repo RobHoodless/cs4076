@@ -59,7 +59,8 @@ void Map::createMap() {
 
 // This doesn't update when moving to a new room, need to fix
 void Map::printMap(QGraphicsScene *scene) const {
-    const int ROOM_SIZE = 20;
+    const int CELL_SIZE = 20;
+    const int CELL_PADDING = 2;
 
     int x = 650;
     int y = 475;
@@ -68,15 +69,15 @@ void Map::printMap(QGraphicsScene *scene) const {
         for (int j = 0; j < GRID_WIDTH; j++) {
             if (rooms[i][j]) {
                 if (i == this->activeY && j == this->activeX) {
-                    scene->addRect(x, y, ROOM_SIZE, ROOM_SIZE, QPen(QColor(255, 0, 0)));
+                    scene->addRect(x, y, CELL_SIZE, CELL_SIZE, QPen(QColor(255, 0, 0)));
                 } else {
-                    scene->addRect(x, y, ROOM_SIZE, ROOM_SIZE, QPen(QColor(255, 255, 255)));
+                    scene->addRect(x, y, CELL_SIZE, CELL_SIZE, QPen(QColor(255, 255, 255)));
                 }
             }
-            x += 20;
+            x += CELL_SIZE + CELL_PADDING;
         }
         x = 650;
-        y += 20;
+        y += CELL_SIZE + CELL_PADDING;
     }
 }
 
