@@ -13,11 +13,6 @@
 #include <gameview.h>
 
 #include <unistd.h>
-
-#include "room.h"
-#include "player.h"
-#include "item.h"
-#include "gameview.h"
 #include "map.h"
 
 Game::Game(QApplication *qApplication) {

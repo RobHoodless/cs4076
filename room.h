@@ -20,17 +20,6 @@ using namespace std;
 
 class Room {
 public:
-    Room(QGraphicsScene *scene, Player *player, bool roomNorth, bool roomSouth, bool roomEast, bool roomWest);
-    void draw();
-    void refresh(); //redraw all mobile entities.
-    void moveEntities(); //Move all mobile entities.
-    bool isComplete();
-    bool isExited();
-    int getNextDirection();
-    void tearDown();
-
-private:
-    vector<Item *> items;
     Room(QGraphicsScene *scene, Player *player, bool neighbourNorth, bool neighbourEast, bool neighbourSouth, bool neighbourWest);
     ~Room();
     void draw() const;
@@ -42,6 +31,8 @@ private:
     bool getNeighbourEast() const;
     bool getNeighbourSouth() const;
     bool getNeighbourWest() const;
+    bool isExited();
+    void tearDown();
 
 private:
     long roomId; //used to get room details from JSON rooms info.

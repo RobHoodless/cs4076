@@ -3,9 +3,6 @@
 #include "player.h"
 #include <QDebug>
 
-Door::Door() {
-}
-
 Door::Door(Direction direction) {
     this->direction = direction;
 }
@@ -44,8 +41,4 @@ bool Door::isExited() const {
 
 Direction Door::getDirection() const {
     return this->direction;
-}
-
-void Door::handleCollision(Player *player) {
-
 }

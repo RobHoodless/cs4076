@@ -34,7 +34,7 @@ SOURCES +=\
     room.cpp \
     gameview.cpp \
     collidableentity.cpp \
-    enemy.cpp
+    enemy.cpp \
     map.cpp
 
 HEADERS  += game.h \
@@ -47,7 +47,7 @@ HEADERS  += game.h \
     room.h \
     gameview.h \
     collidableentity.h \
-    enemy.h
+    enemy.h \
     map.h
 
 FORMS    +=

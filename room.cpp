@@ -53,7 +53,7 @@ void Room::createEntities() {
     }
 
     for(int i = 0; i < 2; i++) {
-        this->enemies.push_back(new Enemy(rand_coord_func_partial(), rand_coord_func_partial() % 550 ));
+        this->enemies.push_back(new Enemy(rand_coord_func_partial(), rand_coord_func_partial() % 400 ));
     }
     //NOTE:
     //Non functional version would be:
@@ -115,8 +115,6 @@ bool Room::isExited() {
     return exited;
 }
 
-int Room::getNextDirection() {
-    return nextDirection;
 
 bool Room::getNeighbourNorth() const {
     return this->neighbourNorth;
