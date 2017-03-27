@@ -23,10 +23,10 @@ private:
     void processKeys();
     int maxX;
     int maxY;
-    bool movingWest;
-    bool movingEast;
-    bool movingNorth;
-    bool movingSouth;
+    bool movingWest = false;
+    bool movingEast = false;
+    bool movingNorth = false;
+    bool movingSouth = false;
     bool dead = false;
 
     int numSteps = 0;

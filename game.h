@@ -14,7 +14,7 @@ public:
     bool isPaused() const;
     void setFinished(bool finished);
     void setGameOver(bool gameOver);
-    bool isGameOver();
+    bool isGameOver() const;
     //void loadGame(string filePath);
 
 private:

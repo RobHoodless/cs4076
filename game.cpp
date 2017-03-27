@@ -123,7 +123,7 @@ void Game::setGameOver(bool gameOver) {
     this->gameOver = gameOver;
 }
 
-bool Game::isGameOver() {
+bool Game::isGameOver() const {
     return this->gameOver;
 }
 
