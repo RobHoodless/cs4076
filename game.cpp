@@ -100,7 +100,7 @@ void Game::run() {
     }
 
     if(isGameOver()) {
-        sleep(5);
+        sleep(2);
     }
 
     qApplication->exit();

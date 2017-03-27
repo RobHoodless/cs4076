@@ -1,7 +1,7 @@
 #ifndef MOBILEENTITY_H
 #define MOBILEENTITY_H
 
-#include <QPixmap>
+#include <mypixmap.h>
 #include <entity.h>
 
 class MobileEntity : public Entity {

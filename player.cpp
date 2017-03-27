@@ -40,8 +40,6 @@ void Player::keyReleaseEvent(QKeyEvent *event) {
     if (event->key() == Qt::Key_S) {
         movingSouth = false;
     }
-
-    //check if release is auto generated, if it is: ignore, otherwise flip movingDirection
 }
 
 void Player::keyPressEvent(QKeyEvent *event) {
@@ -92,7 +90,7 @@ void Player::move() {
 }
 
 void Player::refreshSprite() {
-    if(steps % 15 == 0) {
+    if(steps % 4 == 0) {
         if(currentSprite.toImage() == standing.toImage()) {
             nextSprite = walkingTransition;
             qDebug() << "Going to transtition" << endl;
@@ -118,7 +116,6 @@ void Player::handleCollisions() {
     QList<QGraphicsItem *> colItems = collidingItems();
     for(auto & entity: colItems) {
        CollidableEntity * itemEntity = dynamic_cast<CollidableEntity*>(entity);
-       //StationaryEntity * itemEntity = dynamic_cast<StationaryEntity*>(entity);
        itemEntity->handleCollision(this);
     }
 }

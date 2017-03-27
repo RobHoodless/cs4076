@@ -25,7 +25,7 @@ void Enemy::draw() {
 
 void Enemy::refreshSprite() {
 
-    if(steps % 15 == 0) {
+    if(steps % 4 == 0) {
         if(currentSprite.toImage() == standing.toImage()) {
             nextSprite = walkingTransition;
             qDebug() << "Going to transtition" << endl;

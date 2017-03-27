@@ -35,7 +35,8 @@ SOURCES +=\
     gameview.cpp \
     collidableentity.cpp \
     enemy.cpp \
-    map.cpp
+    map.cpp \
+    mypixmap.cpp
 
 HEADERS  += game.h \
     entity.h \
@@ -48,7 +49,8 @@ HEADERS  += game.h \
     gameview.h \
     collidableentity.h \
     enemy.h \
-    map.h
+    map.h \
+    mypixmap.h
 
 FORMS    +=
 
