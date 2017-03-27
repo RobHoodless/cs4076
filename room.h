@@ -33,6 +33,7 @@ public:
     bool getNeighbourWest() const;
     bool isExited();
     void tearDown();
+    bool isPlayerDead() const;
 
 private:
     long roomId; //used to get room details from JSON rooms info.

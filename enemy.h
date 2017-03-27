@@ -7,7 +7,7 @@
 class Enemy: public MobileEntity, public CollidableEntity {
 public:
     Enemy();
-    Enemy(int initialX, int initialY);
+    Enemy(int initialX, int initialY, int movementDir);
     void handleCollision(Player *player) override;
     void draw() override;
     void refreshSprite() override;
@@ -16,6 +16,8 @@ public:
 private:
     int initialX = 0;
     int initialY = 0;
+    int movementAxis = 0; //0 to move in y axis, anything else is x.
+    int movementDir = -1; //-1 is up or left, 1 is down or right
 };
 
 #endif // ENEMY_H

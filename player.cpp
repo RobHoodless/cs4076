@@ -122,3 +122,11 @@ void Player::handleCollisions() {
        itemEntity->handleCollision(this);
     }
 }
+
+void Player::setDead(bool dead) {
+    this->dead = dead;
+}
+
+bool Player::isDead() {
+    return this->dead;
+}

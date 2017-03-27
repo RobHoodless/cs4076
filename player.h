@@ -15,6 +15,8 @@ public:
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
     void handleCollisions();
+    void setDead(bool dead);
+    bool isDead();
 
 private:
     QSet<int> keysPressed;
@@ -25,6 +27,7 @@ private:
     bool movingEast;
     bool movingNorth;
     bool movingSouth;
+    bool dead = false;
 
     int numSteps = 0;
 };

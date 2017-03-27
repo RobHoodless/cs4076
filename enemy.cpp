@@ -11,9 +11,10 @@ Enemy::Enemy() {
     nextSprite = standing;
 }
 
-Enemy::Enemy(int initialX, int initialY) : Enemy() {
+Enemy::Enemy(int initialX, int initialY, int movementAxis) : Enemy() {
     this->initialX = initialX;
     this->initialY = initialY;
+    this->movementAxis = movementAxis;
 }
 
 void Enemy::draw() {
@@ -25,9 +26,30 @@ void Enemy::refreshSprite() {
     return;
 }
 void Enemy::move() {
+    if(this->movementAxis == 0) {
+        //move up
+        if(this->x() <= 0) {
+            movementDir = 1;
+        }
+        if(this->x() >= 740) {
+            movementDir = -1;
+        }
+        this->setPos(this->x() + (5 * movementDir), this->y());
+
+    } else {
+        //move sideways
+        if(this->y() <= 0) {
+            movementDir = 1;
+        }
+        if(this->y() >= 375) {
+            movementDir = -1;
+        }
+        this->setPos(this->x(), this->y() + (5 * movementDir));
+    }
     return;
 }
 
 void Enemy::handleCollision(Player *player) {
+    player->setDead(true);
     return;
 }

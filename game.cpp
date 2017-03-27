@@ -2,6 +2,7 @@
 
 #include <QGraphicsScene>
 #include <QGraphicsView>
+#include <QGraphicsTextItem>
 #include <QDebug>
 #include <QString>
 
@@ -32,13 +33,14 @@ void Game::run() {
     // Create the scene
     QGraphicsScene * scene = new QGraphicsScene();
     scene->setSceneRect(0,0,MAX_X,MAX_Y);
+    scene->setBackgroundBrush(QBrush(QImage(":/images/background.png")));
 
     // Create the item to put into the scene.
     Player * player = new Player(MAX_X, MAX_Y - MAP_SIZE);
 
     // Add the player to the scene
     scene->addItem(player);
-    scene->setBackgroundBrush(QBrush(QImage(":/images/background.png")));
+
 
     Map map(scene);
 
@@ -61,12 +63,17 @@ void Game::run() {
     clock_t last_time = this_time;
 
     //main game loop
-    while(!this->isPaused()) {
+    while(!this->isPaused() && !this->isFinished()) {
         this->qApplication->processEvents();
 
         this_time = clock();
         time_counter += (double) (this_time - last_time);
         last_time = this_time;
+
+        if(room->isPlayerDead()) {
+            this->setFinished(true);
+            this->setGameOver(true);
+        }
 
         if (time_counter > (double)(NUM_SECONDS * CLOCKS_PER_SEC)) {
             time_counter -= (double)(NUM_SECONDS * CLOCKS_PER_SEC);
@@ -88,13 +95,36 @@ void Game::run() {
 
             room->draw();
         }
+
+
     }
+
+    if(isGameOver()) {
+        sleep(5);
+    }
+
     qApplication->exit();
     view->close();
 }
 
 bool Game::isPaused() const {
     return this->view->isPaused();
+}
+
+void Game::setFinished(bool finished) {
+    this->finished = finished;
+}
+
+bool Game::isFinished() const {
+    return this->finished;
+}
+
+void Game::setGameOver(bool gameOver) {
+    this->gameOver = gameOver;
+}
+
+bool Game::isGameOver() {
+    return this->gameOver;
 }
 
 int main(int argc, char *argv[]) {

@@ -46,20 +46,25 @@ void Room::createEntities() {
     //can call rand_coord_func_partial without needing to pass the engine then.
     auto rand_coord_func_partial = std::bind(std::uniform_int_distribution<int>(0,751), mt19937(seed));
 
-    //x coord will be under 750, enforce y coord under 550 to make sure the whole diamond is in view.
-    for(int i = 0; i < 5; i++) {
-        Item *itemPtr = new Item(rand_coord_func_partial(), rand_coord_func_partial() % 400);
+    //x coord will be under 750, enforce y coord under 375 to make sure the whole diamond is in view.
+    for(int i = 0; i < 3; i++) {
+        Item *itemPtr = new Item(rand_coord_func_partial(), rand_coord_func_partial() % 375);
         this->items.push_back(itemPtr);
     }
 
-    for(int i = 0; i < 2; i++) {
-        this->enemies.push_back(new Enemy(rand_coord_func_partial(), rand_coord_func_partial() % 400 ));
+    for(int i = 0; i < 1; i++) {
+        int x = rand_coord_func_partial();
+        while(x > 300 && x < 400) {
+            x = rand_coord_func_partial();
+        }
+        int y = rand_coord_func_partial() % 375;
+        while(y > 200 && y < 300 ) {
+            y = rand_coord_func_partial() % 375;
+        }
+        this->enemies.push_back(new Enemy(x,
+                                          rand_coord_func_partial() % 375,
+                                          rand_coord_func_partial() % 2 ));
     }
-    //NOTE:
-    //Non functional version would be:
-    //uniform_int_distribution<int> dist(0, 751);
-    //mt19937 engine(seed);
-    //this->items.push_back(new Item(dist(engine), dist(engine) % 550 ));
 
     createDoors();
 }
@@ -94,6 +99,10 @@ void Room::handleCollisions() const {
 void Room::refresh() const {
     this->player->move();
     this->player->refreshSprite();
+    for(auto & enemy: enemies) {
+        enemy->move();
+        enemy->refreshSprite();
+    }
     handleCollisions();
 }
 
@@ -130,6 +139,10 @@ bool Room::getNeighbourSouth() const {
 
 bool Room::getNeighbourWest() const {
     return this->neighbourWest;
+}
+
+bool Room::isPlayerDead() const {
+    return player->isDead();
 }
 
 int Room::getNextDirection() const {
