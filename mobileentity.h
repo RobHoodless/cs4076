@@ -12,6 +12,7 @@ public:
 
 protected:
     QPixmap nextSprite;
+    QPixmap currentSprite;
     QPixmap standing;
     QPixmap walkingTransition;
     QPixmap walkingFull;

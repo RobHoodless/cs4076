@@ -29,7 +29,7 @@ private:
     bool movingSouth = false;
     bool dead = false;
 
-    int numSteps = 0;
+    int steps = 0;
 };
 
 #endif // PLAYER_H

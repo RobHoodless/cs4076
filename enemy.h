@@ -18,6 +18,7 @@ private:
     int initialY = 0;
     int movementAxis = 0; //0 to move in y axis, anything else is x.
     int movementDir = -1; //-1 is up or left, 1 is down or right
+    int steps = 0;
 };
 
 #endif // ENEMY_H

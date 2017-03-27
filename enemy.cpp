@@ -1,4 +1,5 @@
 #include "enemy.h"
+#include "QDebug"
 
 Enemy::Enemy() {
     //perhaps what I want is a sprite sheet location that has the path in string form for the image from which to generate the qimage
@@ -8,6 +9,7 @@ Enemy::Enemy() {
     walkingFull =  QPixmap::fromImage(spriteSheet->copy(200, 0, 100, 100));
 
     this->setPixmap(standing);
+    currentSprite = standing;
     nextSprite = standing;
 }
 
@@ -22,10 +24,31 @@ void Enemy::draw() {
 }
 
 void Enemy::refreshSprite() {
-    //setPixmap(nextSprite);
+
+    if(steps % 15 == 0) {
+        if(currentSprite.toImage() == standing.toImage()) {
+            nextSprite = walkingTransition;
+            qDebug() << "Going to transtition" << endl;
+        }
+
+        if(currentSprite.toImage() == walkingFull.toImage()) {
+            nextSprite = walkingTransition;
+            qDebug() << " Going to transition" << endl;
+        }
+
+        if(currentSprite.toImage() == walkingTransition.toImage()) {
+            nextSprite = walkingFull;
+            qDebug() << "Going to full" << endl;
+        }
+
+        setPixmap(nextSprite);
+        currentSprite = nextSprite;
+    }
     return;
 }
 void Enemy::move() {
+    steps++;
+
     if(this->movementAxis == 0) {
         //move up
         if(this->x() <= 0) {

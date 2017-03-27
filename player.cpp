@@ -52,19 +52,15 @@ void Player::keyPressEvent(QKeyEvent *event) {
 void Player::processKeys() {
     if (keysPressed.contains(Qt::Key_W)) {
         movingNorth = true;
-        numSteps++;
     }
     if (keysPressed.contains(Qt::Key_A)){
         movingWest = true;
-        numSteps++;
     }
     if (keysPressed.contains(Qt::Key_D) ) {
         movingEast = true;
-        numSteps++;
     }
     if (keysPressed.contains(Qt::Key_S) ) {
         movingSouth = true;
-        numSteps++; //increment this in the move function eventually
     }
 }
 
@@ -75,28 +71,14 @@ void Player::draw() {
 }
 
 void Player::move() {
+    steps++;
     if (movingWest) {
-        //10 can be replaced with a variable if we want to implement
-        //a speed attribute.
         int nextX = ((((this->x() - 10)) < 0) ? 0 : (this->x() - 10));
         this->setPos(nextX, this->y());
-        if (numSteps % 2 == 0) {
-            nextSprite = walkingTransition;
-        }
-        else {
-            nextSprite = walkingFull;
-        }
     }
     if (movingEast) {
         int nextX = ((((this->x() + 10)) > this->maxX) ? this->maxX : (this->x() + 10));
         this->setPos(nextX, this->y());
-        //Need to figure out better way to alternate walking animation.
-        if (numSteps % 2 == 0) {
-            nextSprite = walkingTransition;
-        }
-        else {
-            nextSprite = walkingFull;
-        }
     }
     if (movingNorth) {
         int nextY = ((((this->y() - 10)) < 0) ? 0 : (this->y() - 10));
@@ -110,7 +92,25 @@ void Player::move() {
 }
 
 void Player::refreshSprite() {
-    setPixmap(nextSprite);
+    if(steps % 15 == 0) {
+        if(currentSprite.toImage() == standing.toImage()) {
+            nextSprite = walkingTransition;
+            qDebug() << "Going to transtition" << endl;
+        }
+
+        if(currentSprite.toImage() == walkingFull.toImage()) {
+            nextSprite = walkingTransition;
+            qDebug() << " Going to transition" << endl;
+        }
+
+        if(currentSprite.toImage() == walkingTransition.toImage()) {
+            nextSprite = walkingFull;
+            qDebug() << "Going to full" << endl;
+        }
+
+        setPixmap(nextSprite);
+        currentSprite = nextSprite;
+    }
     return;
 }
 
