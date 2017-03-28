@@ -32,14 +32,27 @@ void Room::setup(bool n, bool e, bool s, bool w) {
 void Room::tearDown() {
     QList<QGraphicsItem*> sceneItems = this->scene->items();
 
-    //This is extremelly hacky, to prevent removing player. Need to fix!
-    qDebug() << "Removing items";
-    for (int i = 0; i < sceneItems.size(); i++) {
-        if (!sceneItems[i]->hasFocus()) {
-            qDebug() << sceneItems[i];
-            this->scene->removeItem(sceneItems[i]);
+    for (auto &enemy: this->enemies) {
+        if (sceneItems.contains(enemy)) {
+            scene->removeItem(enemy);
         }
     }
+
+    for (auto &item: this->items) {
+        if (sceneItems.contains(item)) {
+            scene->removeItem(item);
+        }
+    }
+
+    for (auto &door: this->doors) {
+        if (sceneItems.contains(door)) {
+            this->scene->removeItem(door);
+        }
+    }
+
+    this->items.clear();
+    this->doors.clear();
+    this->enemies.clear();
 }
 
 void Room::createEntities() {
@@ -78,26 +91,10 @@ void Room::createEntities() {
 }
 
 void Room::createDoors() {
-    if (this->neighbourNorth) {
-        Door *doorPtr = new Door(NORTH);
-        this->doors.push_back(doorPtr);
-        this->items.push_back(doorPtr);
-    }
-    if (this->neighbourEast) {
-        Door *doorPtr = new Door(EAST);
-        this->doors.push_back(doorPtr);
-        this->items.push_back(doorPtr);
-    }
-    if (this->neighbourSouth) {
-        Door *doorPtr = new Door(SOUTH);
-        this->doors.push_back(doorPtr);
-        this->items.push_back(doorPtr);
-    }
-    if (this->neighbourWest) {
-        Door *doorPtr = new Door(WEST);
-        this->doors.push_back(doorPtr);
-        this->items.push_back(doorPtr);
-    }
+    if (this->neighbourNorth) this->doors.push_back(new Door(NORTH));
+    if (this->neighbourEast) this->doors.push_back(new Door(EAST));
+    if (this->neighbourSouth) this->doors.push_back(new Door(SOUTH));
+    if (this->neighbourWest) this->doors.push_back(new Door(WEST));
 }
 
 void Room::handleCollisions() const {
@@ -122,11 +119,14 @@ void Room::draw() const {
         enemy->draw();
     }
 
-    qDebug() << "Adding items:";
     for(auto & item: this->items) {
-        qDebug() << item;
         this->scene->addItem(item);
         item->draw();
+    }
+
+    for (auto & door: this->doors) {
+        this->scene->addItem(door);
+        door->draw();
     }
 }
 

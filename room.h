@@ -29,9 +29,9 @@ public:
     bool isExited();
     void tearDown();
     bool isPlayerDead() const;
+    void createEntities();
 
 private:
-    void createEntities();
     void createDoors();
     void handleCollisions() const;
     QGraphicsScene *scene;

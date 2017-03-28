@@ -43,10 +43,10 @@ void Game::run() {
 
     Map map(scene, player);
 
-    // Add the view needed to visualise the scene.
-    view = new GameView(scene, player);
-
     Room *room = map.getActiveRoom();
+
+    // Add the view needed to visualise the scene.
+    view = new GameView(scene, player, room);
 
     //draw the room onscreen.
     room->draw();

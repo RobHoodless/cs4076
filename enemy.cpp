@@ -70,6 +70,7 @@ void Enemy::move() {
 }
 
 void Enemy::handleCollision(Player *player) {
-    player->setDead(true);
+//    player->setDead(true);
+    qDebug() << "Game over";
     return;
 }

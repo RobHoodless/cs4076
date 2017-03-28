@@ -112,6 +112,7 @@ void Map::changeActiveRoom(Direction direction) {
     else if (direction == WEST) this->goWest();
 
     this->activeRoom = this->rooms[this->activeY][this->activeX];
+    this->activeRoom->createEntities();
 }
 
 inline void Map::goNorth() {
