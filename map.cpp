@@ -71,6 +71,7 @@ void Map::createMap(QGraphicsScene *scene, Player *player) {
     }
 
     this->activeRoom = this->rooms[this->activeY][this->activeX];
+    this->activeRoom->createEntities();
 }
 
 void Map::printMap(QGraphicsScene *scene) const {

@@ -25,8 +25,6 @@ void Room::setup(bool n, bool e, bool s, bool w) {
     this->neighbourEast = e;
     this->neighbourSouth = s;
     this->neighbourWest = w;
-
-    this->createEntities();
 }
 
 void Room::tearDown() {
@@ -41,6 +39,10 @@ void Room::tearDown() {
     for (auto &item: this->items) {
         if (sceneItems.contains(item)) {
             scene->removeItem(item);
+        }
+
+        if (item->isDeleted()) {
+            this->numItems--;
         }
     }
 
@@ -65,7 +67,7 @@ void Room::createEntities() {
     auto rand_partial = std::bind(std::uniform_int_distribution<int>(0,751), mt19937(seed));
 
     //x coord will be under 750, enforce y coord under 375 to make sure the whole diamond is in view.
-    for(int i = 0; i < 3; i++) {
+    for(int i = 0; i < this->numItems; i++) {
         Item *itemPtr = new Item(rand_partial(), rand_partial() % 375);
         this->items.push_back(itemPtr);
     }

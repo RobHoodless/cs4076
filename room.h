@@ -45,6 +45,7 @@ private:
     bool neighbourWest = false;
     int nextDirection;
     bool exited = false;
+    int numItems = 5;
 };
 
 #endif // ROOM_H
