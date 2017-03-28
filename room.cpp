@@ -114,12 +114,12 @@ void Room::refresh() const {
 void Room::draw() const {
     player->setPos(350, 600 - 400);
     player->draw();
-    for(auto & enemy: this->enemies) {
+    for(MobileEntity * enemy: this->enemies) {
         this->scene->addItem(enemy);
         enemy->draw();
     }
 
-    for(auto & item: this->items) {
+    for(StationaryEntity * item: this->items) {
         this->scene->addItem(item);
         item->draw();
     }

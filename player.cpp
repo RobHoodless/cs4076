@@ -8,8 +8,6 @@
 #include "item.h"
 
 Player::Player(int maxX, int maxY) : MobileEntity(":/images/dragon.png", maxX, maxY) {
-
-
     // Make player focusable
     this->setFlag(QGraphicsItem::ItemIsFocusable);
     this->setFocus();
@@ -99,7 +97,7 @@ void Player::refreshSprite() {
 
 void Player::handleCollisions() {
     QList<QGraphicsItem *> colItems = collidingItems();
-    for(auto & entity: colItems) {
+    for(QGraphicsItem* entity: colItems) {
        CollidableEntity * itemEntity = dynamic_cast<CollidableEntity*>(entity);
        itemEntity->handleCollision(this);
     }

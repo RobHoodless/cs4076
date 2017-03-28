@@ -2,7 +2,7 @@
 
 
 
-MobileEntity::MobileEntity(QString filepath, int maxX, int maxY) {
+MobileEntity::MobileEntity(QString filepath, int maxX, int maxY)  {
     spriteSheet = new QImage(filepath);
     standing = Sprite(QPixmap::fromImage(spriteSheet->copy(0, 0, 100, 100)));
     walkingTransition = Sprite(QPixmap::fromImage(spriteSheet->copy(100, 0, 100, 100)));

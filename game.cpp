@@ -41,7 +41,6 @@ void Game::run() {
     // Add the player to the scene
     scene->addItem(player);
 
-
     Map map(scene);
 
     // Add the view needed to visualise the scene.
@@ -95,8 +94,6 @@ void Game::run() {
 
             room->draw();
         }
-
-
     }
 
     if(isGameOver()) {
