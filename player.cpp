@@ -3,8 +3,7 @@
 #include <QKeyEvent>
 #include <QDebug>
 
-#include <item.h>
-#include <collidableentity.h>
+#include "collidableentity.h"
 #include "item.h"
 
 Player::Player(int maxX, int maxY) {
@@ -93,17 +92,14 @@ void Player::refreshSprite() {
     if(steps % 4 == 0) {
         if(currentSprite.toImage() == standing.toImage()) {
             nextSprite = walkingTransition;
-            qDebug() << "Going to transtition" << endl;
         }
 
         if(currentSprite.toImage() == walkingFull.toImage()) {
             nextSprite = walkingTransition;
-            qDebug() << " Going to transition" << endl;
         }
 
         if(currentSprite.toImage() == walkingTransition.toImage()) {
             nextSprite = walkingFull;
-            qDebug() << "Going to full" << endl;
         }
 
         setPixmap(nextSprite);

@@ -3,7 +3,7 @@
 
 #include "player.h"
 #include "stationaryentity.h"
-#include "map.h"
+#include "direction.h"
 
 class Door : public StationaryEntity {
 public:

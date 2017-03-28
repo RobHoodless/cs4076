@@ -1,6 +1,7 @@
 #include "door.h"
 
 #include "player.h"
+#include "direction.h"
 #include <QDebug>
 
 Door::Door(Direction direction) {

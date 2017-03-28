@@ -5,24 +5,26 @@
 
 #include <vector>
 
-using namespace std;
+#include "room.h"
+#include "player.h"
+#include "direction.h"
 
-enum Direction {NORTH = 0, EAST, SOUTH, WEST};
+using namespace std;
 
 class Map {
 public:
-    Map(QGraphicsScene *scene);
-    int getActiveX() const;
-    int getActiveY() const;
+    Map(QGraphicsScene *scene, Player *player);
     void changeActiveRoom(Direction direction);
-    void getNeighbourRooms(bool* directions) const;
+    Room* getActiveRoom();
     void printMap(QGraphicsScene *scene) const;
 
 private:
     int activeX;
     int activeY;
-    vector<vector<bool>> rooms;
-    void createMap();
+    vector< vector< Room* > > rooms;
+    Room *activeRoom;
+    void createMap(QGraphicsScene *scene, Player *player);
+    void getNeighbourRooms(bool* directions, int x, int y) const;
     inline void goNorth();
     inline void goEast();
     inline void goSouth();

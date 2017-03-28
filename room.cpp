@@ -1,5 +1,3 @@
-#include "room.h"
-
 #include <QGraphicsScene>
 #include <QDebug>
 
@@ -13,27 +11,33 @@
 #include "item.h"
 #include "door.h"
 
+#include "room.h"
+
 using namespace std;
 
-Room::Room(QGraphicsScene *scene, Player *player, bool roomNorth, bool roomEast, bool roomSouth, bool roomWest) {
+Room::Room(QGraphicsScene *scene, Player *player) {
     this->player = player;
     this->scene = scene;
+}
 
-    this->neighbourNorth = roomNorth;
-    this->neighbourEast = roomEast;
-    this->neighbourSouth = roomSouth;
-    this->neighbourWest = roomWest;
+void Room::setup(bool n, bool e, bool s, bool w) {
+    this->neighbourNorth = n;
+    this->neighbourEast = e;
+    this->neighbourSouth = s;
+    this->neighbourWest = w;
 
     this->createEntities();
 }
 
-Room::~Room() {
-    QList<QGraphicsItem*> items = this->scene->items();
+void Room::tearDown() {
+    QList<QGraphicsItem*> sceneItems = this->scene->items();
 
-    // This is extremelly hacky, to prevent removing player. Need to fix!
-    for (int i = 0; i < items.size(); i++) {
-        if (!items[i]->hasFocus()) {
-            this->scene->removeItem(items[i]);
+    //This is extremelly hacky, to prevent removing player. Need to fix!
+    qDebug() << "Removing items";
+    for (int i = 0; i < sceneItems.size(); i++) {
+        if (!sceneItems[i]->hasFocus()) {
+            qDebug() << sceneItems[i];
+            this->scene->removeItem(sceneItems[i]);
         }
     }
 }
@@ -118,7 +122,9 @@ void Room::draw() const {
         enemy->draw();
     }
 
+    qDebug() << "Adding items:";
     for(auto & item: this->items) {
+        qDebug() << item;
         this->scene->addItem(item);
         item->draw();
     }
@@ -126,23 +132,6 @@ void Room::draw() const {
 
 bool Room::isExited() {
     return exited;
-}
-
-
-bool Room::getNeighbourNorth() const {
-    return this->neighbourNorth;
-}
-
-bool Room::getNeighbourEast() const {
-    return this->neighbourEast;
-}
-
-bool Room::getNeighbourSouth() const {
-    return this->neighbourSouth;
-}
-
-bool Room::getNeighbourWest() const {
-    return this->neighbourWest;
 }
 
 bool Room::isPlayerDead() const {
