@@ -15,13 +15,14 @@
 
 using namespace std;
 
-Room::Room(QGraphicsScene *scene, Player *player, bool roomNorth, bool roomEast, bool roomSouth, bool roomWest):
-    scene(scene),
-    player(player),
-    neighbourNorth(neighbourNorth),
-    neighbourEast(neighbourEast),
-    neighbourWest(neighbourWest),
-    neighbourSouth(neighbourSouth) {
+Room::Room(QGraphicsScene *scene, Player *player, bool roomNorth, bool roomEast, bool roomSouth, bool roomWest)
+    : scene(scene),
+      player(player),
+      neighbourNorth(roomNorth),
+      neighbourEast(roomEast),
+      neighbourWest(roomSouth),
+      neighbourSouth(roomWest){
+
     this->createEntities();
 }
 
