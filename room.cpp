@@ -65,7 +65,9 @@ void Room::createEntities() {
         }
 
         this->enemies.push_back(new Enemy(x,
-                                          rand_partial() % 375,
+                                          y,
+                                          800,
+                                          450, //total size - map size.
                                           rand_partial() % 2 ));
     }
 

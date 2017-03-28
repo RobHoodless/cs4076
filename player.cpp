@@ -7,17 +7,8 @@
 #include <collidableentity.h>
 #include "item.h"
 
-Player::Player(int maxX, int maxY) {
-    spriteSheet = new QImage(":/images/dragon.png");
-    standing = Sprite(QPixmap::fromImage(spriteSheet->copy(0, 0, 100, 100)));
-    walkingTransition = Sprite(QPixmap::fromImage(spriteSheet->copy(100, 0, 100, 100)));
-    walkingFull =  Sprite(QPixmap::fromImage(spriteSheet->copy(200, 0, 100, 100)));
+Player::Player(int maxX, int maxY) : MobileEntity(":/images/dragon.png", maxX, maxY) {
 
-    this->setPixmap(standing.getPixmap());
-    nextSprite = standing;
-
-    this->maxX = maxX - 100;
-    this->maxY = maxY - 100;
 
     // Make player focusable
     this->setFlag(QGraphicsItem::ItemIsFocusable);

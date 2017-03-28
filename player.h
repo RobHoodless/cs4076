@@ -21,8 +21,6 @@ public:
 private:
     QSet<int> keysPressed;
     void processKeys();
-    int maxX;
-    int maxY;
     bool movingWest = false;
     bool movingEast = false;
     bool movingNorth = false;

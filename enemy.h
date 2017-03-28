@@ -6,8 +6,7 @@
 
 class Enemy: public MobileEntity, public CollidableEntity {
 public:
-    Enemy();
-    Enemy(int initialX, int initialY, int movementDir);
+    Enemy(int initialX, int initialY, int maxX, int maxY, int movementDir);
     void handleCollision(Player *player) override;
     void draw() override;
     void refreshSprite() override;

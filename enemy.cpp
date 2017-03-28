@@ -1,18 +1,7 @@
 #include "enemy.h"
 #include "QDebug"
 
-Enemy::Enemy() {
-    spriteSheet = new QImage(":/images/enemy.png");
-    standing = Sprite(QPixmap::fromImage(spriteSheet->copy(0, 0, 100, 100)));
-    walkingTransition = Sprite(QPixmap::fromImage(spriteSheet->copy(100, 0, 100, 100)));
-    walkingFull =  Sprite(QPixmap::fromImage(spriteSheet->copy(200, 0, 100, 100)));
-
-    this->setPixmap(standing.getPixmap());
-    currentSprite = standing;
-    nextSprite = standing;
-}
-
-Enemy::Enemy(int initialX, int initialY, int movementAxis) : Enemy() {
+Enemy::Enemy(int initialX, int initialY, int maxX, int maxY, int movementAxis) : MobileEntity(":/images/enemy.png", maxX, maxY) {
     this->initialX = initialX;
     this->initialY = initialY;
     this->movementAxis = movementAxis;
@@ -49,7 +38,7 @@ void Enemy::move() {
         if(this->x() <= 0) {
             movementDir = 1;
         }
-        if(this->x() >= 740) {
+        if(this->x() >= this->maxX) {
             movementDir = -1;
         }
         this->setPos(this->x() + (5 * movementDir), this->y());
@@ -58,7 +47,7 @@ void Enemy::move() {
         if(this->y() <= 0) {
             movementDir = 1;
         }
-        if(this->y() >= 375) {
+        if(this->y() >= this->maxY) {
             movementDir = -1;
         }
         this->setPos(this->x(), this->y() + (5 * movementDir));
