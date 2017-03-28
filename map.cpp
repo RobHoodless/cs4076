@@ -6,58 +6,74 @@
 #include <time.h>
 #include <vector>
 
+#include "room.h"
+#include "direction.h"
 #include "map.h"
 
 using namespace std;
 
-static const int GRID_HEIGHT = 5;
-static const int GRID_WIDTH = 5;
+static const int MAP_SIZE = 5;
 
-Map::Map(QGraphicsScene *scene) {
-    this->createMap();
+Map::Map(QGraphicsScene *scene, Player *player) {
+    this->createMap(scene, player);
     this->printMap(scene);
 }
 
-void Map::createMap() {
+void Map::createMap(QGraphicsScene *scene, Player *player) {
     srand(time(NULL));
 
-    for (int i = 0; i < GRID_HEIGHT; i++) {
-        vector<bool> xRooms;
-        for (int j = 0; j < GRID_WIDTH; j++) {
-            xRooms.push_back(0);
+    int roomPositions[MAP_SIZE];
+
+    // Initialize rooms to vector of nullptrs
+    for (int i = 0; i < MAP_SIZE; i++) {
+        vector<Room*> innerRooms;
+        for (int j = 0; j < MAP_SIZE; j++) {
+            innerRooms.push_back(nullptr);
         }
-        rooms.push_back(xRooms);
+        this->rooms.push_back(innerRooms);
     }
 
-    vector<int> roomPositions(GRID_HEIGHT, -1);
+    // Add rooms to map
+    for (int i = 0; i < MAP_SIZE; i++) {
+        int initialRoomPosition = rand() % MAP_SIZE;
 
-    /* Populate initial room for each floor */
-    for (int i = 0; i < GRID_HEIGHT; i++) {
-        int baseRoomPosition = rand() % GRID_WIDTH;
-
-        rooms[i][baseRoomPosition] = true;
-        roomPositions[i] = baseRoomPosition;
-        activeY = GRID_HEIGHT - 1;
-        activeX = roomPositions[GRID_WIDTH - 1];
+        this->rooms[i][initialRoomPosition] = new Room(scene, player);
+        roomPositions[i] = initialRoomPosition;
     }
+
+    this->activeY = MAP_SIZE - 1;
+    this->activeX = roomPositions[MAP_SIZE - 1];
 
     /* Connect base rooms */
-    for (int row = 0; row < GRID_HEIGHT - 1; row++) {
-        rooms[row + 1][roomPositions[row]] = true;
+    for (int row = 0; row < MAP_SIZE - 1; row++) {
+        this->rooms[row + 1][roomPositions[row]] = new Room(scene, player);
 
         if (roomPositions[row] < roomPositions[row + 1]) {
             for (int j = roomPositions[row]; j < roomPositions[row + 1]; j++) {
-                rooms[row + 1][j] = true;
+                this->rooms[row + 1][j] = new Room(scene, player);
             }
         } else if (roomPositions[row] > roomPositions[row + 1]) {
             for (int j = roomPositions[row]; j > roomPositions[row + 1]; j--) {
-                rooms[row + 1][j] = true;
+                this->rooms[row + 1][j] = new Room(scene, player);
             }
         }
     }
+
+    for (int i = 0; i < MAP_SIZE; i++) {
+        for (int j = 0; j < MAP_SIZE; j++) {
+            if (rooms[i][j]) {
+                bool neighbours[4] = {false, false, false, false};
+                getNeighbourRooms(neighbours, j, i);
+
+                this->rooms[i][j]->setup(neighbours[0], neighbours[1], neighbours[2], neighbours[3]);
+            }
+        }
+    }
+
+    this->activeRoom = this->rooms[this->activeY][this->activeX];
+    this->activeRoom->createEntities();
 }
 
-// This doesn't update when moving to a new room, need to fix
 void Map::printMap(QGraphicsScene *scene) const {
     const int CELL_SIZE = 20;
     const int CELL_PADDING = 2;
@@ -65,9 +81,9 @@ void Map::printMap(QGraphicsScene *scene) const {
     int x = 650;
     int y = 475;
 
-    for (int i = 0; i < GRID_HEIGHT; i++) {
-        for (int j = 0; j < GRID_WIDTH; j++) {
-            if (rooms[i][j]) {
+    for (int i = 0; i < MAP_SIZE; i++) {
+        for (int j = 0; j < MAP_SIZE; j++) {
+            if (this->rooms[i][j]) {
                 if (i == this->activeY && j == this->activeX) {
                     scene->addRect(x, y, CELL_SIZE, CELL_SIZE, QPen(QColor(255, 0, 0)));
                 } else {
@@ -81,34 +97,23 @@ void Map::printMap(QGraphicsScene *scene) const {
     }
 }
 
-int Map::getActiveX() const {
-    return this->activeX;
-}
-
-int Map::getActiveY() const {
-    return this->activeY;
-}
-
-void Map::getNeighbourRooms(bool* nesw) const {
-    if ((activeY - 1) >= 0 && rooms[activeY-1][activeX]) { // North
-        nesw[0] = true;
-    }
-    if ((activeX + 1) < GRID_WIDTH && rooms[activeY][activeX+1]) { // East
-        nesw[1] = true;
-    }
-    if ((activeY + 1) < GRID_HEIGHT && rooms[activeY+1][activeX]) { // South
-        nesw[2] = true;
-    }
-    if ((activeX - 1) >= 0 && rooms[activeY][activeX-1]) { // West
-        nesw[3] = true;
-    }
+void Map::getNeighbourRooms(bool* nesw, int x, int y) const {
+    if ((y - 1) >= 0 && rooms[y - 1][x]) nesw[0] = true; // North
+    if ((x + 1) < MAP_SIZE && rooms[y][x + 1]) nesw[1] = true; // East
+    if ((y + 1) < MAP_SIZE && rooms[y + 1][x]) nesw[2] = true; // South
+    if ((x - 1) >= 0 && rooms[y][x - 1]) nesw[3] = true; // West
 }
 
 void Map::changeActiveRoom(Direction direction) {
+    this->activeRoom->tearDown();
+
     if (direction == NORTH) this->goNorth();
     else if (direction == EAST) this->goEast();
     else if (direction == SOUTH) this->goSouth();
     else if (direction == WEST) this->goWest();
+
+    this->activeRoom = this->rooms[this->activeY][this->activeX];
+    this->activeRoom->createEntities();
 }
 
 inline void Map::goNorth() {
@@ -125,4 +130,8 @@ inline void Map::goSouth() {
 
 inline void Map::goWest() {
     this->activeX -= 1;
+}
+
+Room* Map::getActiveRoom() {
+    return this->activeRoom;
 }

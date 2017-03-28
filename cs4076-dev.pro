@@ -50,7 +50,9 @@ HEADERS  += game.h \
     collidableentity.h \
     enemy.h \
     map.h \
-    sprite.h
+    sprite.h \
+    mypixmap.h \
+    direction.h 
 
 FORMS    +=
 

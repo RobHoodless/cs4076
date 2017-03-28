@@ -1,5 +1,3 @@
-#include "room.h"
-
 #include <QGraphicsScene>
 #include <QDebug>
 
@@ -13,28 +11,50 @@
 #include "item.h"
 #include "door.h"
 
+#include "room.h"
+
 using namespace std;
 
-Room::Room(QGraphicsScene *scene, Player *player, bool roomNorth, bool roomEast, bool roomSouth, bool roomWest)
-    : scene(scene),
-      player(player),
-      neighbourNorth(roomNorth),
-      neighbourEast(roomEast),
-      neighbourWest(roomWest),
-      neighbourSouth(roomSouth){
-
-    this->createEntities();
+Room::Room(QGraphicsScene *scene, Player *player) {
+    this->player = player;
+    this->scene = scene;
 }
 
-Room::~Room() {
-    QList<QGraphicsItem*> items = this->scene->items();
+void Room::setup(bool n, bool e, bool s, bool w) {
+    this->neighbourNorth = n;
+    this->neighbourEast = e;
+    this->neighbourSouth = s;
+    this->neighbourWest = w;
+}
 
-    // This is extremelly hacky, to prevent removing player. Need to fix!
-    for (int i = 0; i < items.size(); i++) {
-        if (!items[i]->hasFocus()) {
-            this->scene->removeItem(items[i]);
+void Room::tearDown() {
+    QList<QGraphicsItem*> sceneItems = this->scene->items();
+
+    for (auto &enemy: this->enemies) {
+        if (sceneItems.contains(enemy)) {
+            scene->removeItem(enemy);
         }
     }
+
+    for (auto &item: this->items) {
+        if (sceneItems.contains(item)) {
+            scene->removeItem(item);
+        }
+
+        if (item->isDeleted()) {
+            this->numItems--;
+        }
+    }
+
+    for (auto &door: this->doors) {
+        if (sceneItems.contains(door)) {
+            this->scene->removeItem(door);
+        }
+    }
+
+    this->items.clear();
+    this->doors.clear();
+    this->enemies.clear();
 }
 
 void Room::createEntities() {
@@ -47,7 +67,7 @@ void Room::createEntities() {
     auto rand_partial = std::bind(std::uniform_int_distribution<int>(0,751), mt19937(seed));
 
     //x coord will be under 750, enforce y coord under 375 to make sure the whole diamond is in view.
-    for(int i = 0; i < 3; i++) {
+    for(int i = 0; i < this->numItems; i++) {
         Item *itemPtr = new Item(rand_partial(), rand_partial() % 375);
         this->items.push_back(itemPtr);
     }
@@ -75,26 +95,10 @@ void Room::createEntities() {
 }
 
 void Room::createDoors() {
-    if (this->neighbourNorth) {
-        Door *doorPtr = new Door(NORTH);
-        this->doors.push_back(doorPtr);
-        this->items.push_back(doorPtr);
-    }
-    if (this->neighbourEast) {
-        Door *doorPtr = new Door(EAST);
-        this->doors.push_back(doorPtr);
-        this->items.push_back(doorPtr);
-    }
-    if (this->neighbourSouth) {
-        Door *doorPtr = new Door(SOUTH);
-        this->doors.push_back(doorPtr);
-        this->items.push_back(doorPtr);
-    }
-    if (this->neighbourWest) {
-        Door *doorPtr = new Door(WEST);
-        this->doors.push_back(doorPtr);
-        this->items.push_back(doorPtr);
-    }
+    if (this->neighbourNorth) this->doors.push_back(new Door(NORTH));
+    if (this->neighbourEast) this->doors.push_back(new Door(EAST));
+    if (this->neighbourSouth) this->doors.push_back(new Door(SOUTH));
+    if (this->neighbourWest) this->doors.push_back(new Door(WEST));
 }
 
 void Room::handleCollisions() const {
@@ -123,27 +127,15 @@ void Room::draw() const {
         this->scene->addItem(item);
         item->draw();
     }
+
+    for (auto & door: this->doors) {
+        this->scene->addItem(door);
+        door->draw();
+    }
 }
 
 bool Room::isExited() {
     return exited;
-}
-
-
-bool Room::getNeighbourNorth() const {
-    return this->neighbourNorth;
-}
-
-bool Room::getNeighbourEast() const {
-    return this->neighbourEast;
-}
-
-bool Room::getNeighbourSouth() const {
-    return this->neighbourSouth;
-}
-
-bool Room::getNeighbourWest() const {
-    return this->neighbourWest;
 }
 
 bool Room::isPlayerDead() const {

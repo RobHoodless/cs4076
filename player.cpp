@@ -3,8 +3,7 @@
 #include <QKeyEvent>
 #include <QDebug>
 
-#include <item.h>
-#include <collidableentity.h>
+#include "collidableentity.h"
 #include "item.h"
 
 Player::Player(int maxX, int maxY) : MobileEntity(":/images/dragon.png", maxX, maxY) {

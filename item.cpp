@@ -20,5 +20,10 @@ void Item::draw() {
 }
 
 void Item::handleCollision(Player *player) {
+    this->deleted = true;
     delete this;
+}
+
+bool StationaryEntity::isDeleted() {
+    return this->deleted;
 }

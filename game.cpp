@@ -41,14 +41,12 @@ void Game::run() {
     // Add the player to the scene
     scene->addItem(player);
 
-    Map map(scene);
+    Map map(scene, player);
+
+    Room *room = map.getActiveRoom();
 
     // Add the view needed to visualise the scene.
-    view = new GameView(scene, player);
-
-    bool neighbourRooms[] = {false, false, false, false};
-    map.getNeighbourRooms(neighbourRooms);
-    Room *room = new Room(scene, player, neighbourRooms[0],neighbourRooms[1],neighbourRooms[2],neighbourRooms[3]);
+    view = new GameView(scene, player, room);
 
     //draw the room onscreen.
     room->draw();
@@ -84,11 +82,7 @@ void Game::run() {
         if (room->getNextDirection() >= 0) {
             map.changeActiveRoom(static_cast<Direction>(room->getNextDirection()));
 
-            bool neighbourRooms[] = {false, false, false, false};
-            map.getNeighbourRooms(neighbourRooms);
-
-            delete room;
-            room = new Room(scene, player, neighbourRooms[0],neighbourRooms[1],neighbourRooms[2],neighbourRooms[3]);
+            room = map.getActiveRoom();
 
             map.printMap(scene);
 
