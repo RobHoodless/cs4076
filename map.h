@@ -17,6 +17,7 @@ public:
     void changeActiveRoom(Direction direction);
     Room* getActiveRoom();
     void printMap(QGraphicsScene *scene) const;
+    int getNumItems() const;
 
 private:
     int activeX;
@@ -24,11 +25,12 @@ private:
     vector< vector< Room* > > rooms;
     Room *activeRoom;
     void createMap(QGraphicsScene *scene, Player *player);
-    void getNeighbourRooms(bool* directions, int x, int y) const;
+    void fillNeighbours(bool* neighbours, int x, int y) const;
     inline void goNorth();
     inline void goEast();
     inline void goSouth();
     inline void goWest();
+    int numRooms = 0;
 };
 
 #endif // MAP_H

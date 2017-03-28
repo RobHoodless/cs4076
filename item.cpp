@@ -20,6 +20,7 @@ void Item::draw() {
 }
 
 void Item::handleCollision(Player *player) {
+    player->incrementScore();
     this->deleted = true;
     delete this;
 }

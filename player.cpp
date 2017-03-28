@@ -109,3 +109,12 @@ void Player::setDead(bool dead) {
 bool Player::isDead() {
     return this->dead;
 }
+
+void Player::incrementScore() {
+    this->score++;
+    qDebug() << this->score;
+}
+
+int Player::getScore() {
+    return this->score;
+}

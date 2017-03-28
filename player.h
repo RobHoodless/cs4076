@@ -17,6 +17,8 @@ public:
     void handleCollisions();
     void setDead(bool dead);
     bool isDead();
+    void incrementScore();
+    int getScore();
 
 private:
     QSet<int> keysPressed;
@@ -26,7 +28,7 @@ private:
     bool movingNorth = false;
     bool movingSouth = false;
     bool dead = false;
-
+    int score = 0;
     int steps = 0;
 };
 

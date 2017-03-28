@@ -38,6 +38,7 @@ void Map::createMap(QGraphicsScene *scene, Player *player) {
         int initialRoomPosition = rand() % MAP_SIZE;
 
         this->rooms[i][initialRoomPosition] = new Room(scene, player);
+        this->numRooms++;
         roomPositions[i] = initialRoomPosition;
     }
 
@@ -46,15 +47,24 @@ void Map::createMap(QGraphicsScene *scene, Player *player) {
 
     /* Connect base rooms */
     for (int row = 0; row < MAP_SIZE - 1; row++) {
-        this->rooms[row + 1][roomPositions[row]] = new Room(scene, player);
+        if (!this->rooms[row + 1][roomPositions[row]]) {
+            this->rooms[row + 1][roomPositions[row]] = new Room(scene, player);
+            this->numRooms++;
+        }
 
         if (roomPositions[row] < roomPositions[row + 1]) {
             for (int j = roomPositions[row]; j < roomPositions[row + 1]; j++) {
-                this->rooms[row + 1][j] = new Room(scene, player);
+                if (!this->rooms[row + 1][j]) {
+                    this->rooms[row + 1][j] = new Room(scene, player);
+                    this->numRooms++;
+                }
             }
         } else if (roomPositions[row] > roomPositions[row + 1]) {
             for (int j = roomPositions[row]; j > roomPositions[row + 1]; j--) {
-                this->rooms[row + 1][j] = new Room(scene, player);
+                if (!this->rooms[row + 1][j]) {
+                    this->rooms[row + 1][j] = new Room(scene, player);
+                    this->numRooms++;
+                }
             }
         }
     }
@@ -63,7 +73,7 @@ void Map::createMap(QGraphicsScene *scene, Player *player) {
         for (int j = 0; j < MAP_SIZE; j++) {
             if (rooms[i][j]) {
                 bool neighbours[4] = {false, false, false, false};
-                getNeighbourRooms(neighbours, j, i);
+                fillNeighbours(neighbours, j, i);
 
                 this->rooms[i][j]->setup(neighbours[0], neighbours[1], neighbours[2], neighbours[3]);
             }
@@ -97,7 +107,7 @@ void Map::printMap(QGraphicsScene *scene) const {
     }
 }
 
-void Map::getNeighbourRooms(bool* nesw, int x, int y) const {
+void Map::fillNeighbours(bool* nesw, int x, int y) const {
     if ((y - 1) >= 0 && rooms[y - 1][x]) nesw[0] = true; // North
     if ((x + 1) < MAP_SIZE && rooms[y][x + 1]) nesw[1] = true; // East
     if ((y + 1) < MAP_SIZE && rooms[y + 1][x]) nesw[2] = true; // South
@@ -134,4 +144,8 @@ inline void Map::goWest() {
 
 Room* Map::getActiveRoom() {
     return this->activeRoom;
+}
+
+int Map::getNumItems() const {
+    return this->numRooms * 5;
 }

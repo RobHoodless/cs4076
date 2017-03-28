@@ -78,6 +78,12 @@ void Game::run() {
             room->refresh();
         }
 
+        if (player->getScore() >= map.getNumItems()) {
+            qDebug() << "You win!";
+            this->setFinished(true);
+            this->setGameOver(true);
+        }
+
         // If player has collided with a door, ie. Moving to a neighbour room
         if (room->getNextDirection() >= 0) {
             map.changeActiveRoom(static_cast<Direction>(room->getNextDirection()));
