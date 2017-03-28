@@ -20,8 +20,8 @@ Room::Room(QGraphicsScene *scene, Player *player, bool roomNorth, bool roomEast,
       player(player),
       neighbourNorth(roomNorth),
       neighbourEast(roomEast),
-      neighbourWest(roomSouth),
-      neighbourSouth(roomWest){
+      neighbourWest(roomWest),
+      neighbourSouth(roomSouth){
 
     this->createEntities();
 }
