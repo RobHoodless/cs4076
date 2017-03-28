@@ -2,7 +2,6 @@
 #include "QDebug"
 
 Enemy::Enemy() {
-    //perhaps what I want is a sprite sheet location that has the path in string form for the image from which to generate the qimage
     spriteSheet = new QImage(":/images/enemy.png");
     standing = Sprite(QPixmap::fromImage(spriteSheet->copy(0, 0, 100, 100)));
     walkingTransition = Sprite(QPixmap::fromImage(spriteSheet->copy(100, 0, 100, 100)));
@@ -28,17 +27,14 @@ void Enemy::refreshSprite() {
     if(steps % 4 == 0) {
         if(currentSprite == standing) {
             nextSprite = walkingTransition;
-            qDebug() << "Going to transtition" << endl;
         }
 
         if(currentSprite == walkingFull) {
             nextSprite = walkingTransition;
-            qDebug() << " Going to transition" << endl;
         }
 
         if(currentSprite == walkingTransition) {
             nextSprite = walkingFull;
-            qDebug() << "Going to full" << endl;
         }
 
         setPixmap(nextSprite.getPixmap());
@@ -50,7 +46,6 @@ void Enemy::move() {
     steps++;
 
     if(this->movementAxis == 0) {
-        //move up
         if(this->x() <= 0) {
             movementDir = 1;
         }
@@ -60,7 +55,6 @@ void Enemy::move() {
         this->setPos(this->x() + (5 * movementDir), this->y());
 
     } else {
-        //move sideways
         if(this->y() <= 0) {
             movementDir = 1;
         }

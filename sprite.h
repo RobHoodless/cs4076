@@ -7,7 +7,7 @@ class Sprite {
 public:
     Sprite();
     Sprite(QPixmap qPixmap);
-    bool operator==(Sprite & rhs) const;
+    bool operator==(const Sprite & rhs) const;
     QPixmap getPixmap() const;
     void setPixmap(QPixmap qPixmap);
 

@@ -5,14 +5,11 @@ Sprite::Sprite() {
     //Empty implementation.
 }
 
-Sprite::Sprite(QPixmap qPixmap) {
-    this->qPixmap = qPixmap;
-}
+Sprite::Sprite(QPixmap qPixmap)
+    : qPixmap(qPixmap) { }
 
-bool Sprite::operator==(Sprite & rhs) const {
-    //Just want to check if they are the same object, so comparing addresses works perfectly.
+bool Sprite::operator==(const Sprite & rhs) const {
     return (this->getPixmap().toImage() == rhs.getPixmap().toImage());
-    //return (&(*(this)) == &rhs);
 }
 
 QPixmap Sprite::getPixmap() const {
