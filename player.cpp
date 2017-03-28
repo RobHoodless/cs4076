@@ -10,11 +10,11 @@
 Player::Player(int maxX, int maxY) {
     //perhaps what I want is a sprite sheet location that has the path in string form for the image from which to generate the qimage
     spriteSheet = new QImage(":/images/dragon.png");
-    standing = QPixmap::fromImage(spriteSheet->copy(0, 0, 100, 100));
-    walkingTransition = QPixmap::fromImage(spriteSheet->copy(100, 0, 100, 100));
-    walkingFull =  QPixmap::fromImage(spriteSheet->copy(200, 0, 100, 100));
+    standing = Sprite(QPixmap::fromImage(spriteSheet->copy(0, 0, 100, 100)));
+    walkingTransition = Sprite(QPixmap::fromImage(spriteSheet->copy(100, 0, 100, 100)));
+    walkingFull =  Sprite(QPixmap::fromImage(spriteSheet->copy(200, 0, 100, 100)));
 
-    this->setPixmap(standing);
+    this->setPixmap(standing.getPixmap());
     nextSprite = standing;
 
     this->maxX = maxX - 100;
@@ -64,7 +64,7 @@ void Player::processKeys() {
 
 void Player::draw() {
     //set graphic
-    this->setPixmap(standing);
+    this->setPixmap(standing.getPixmap());
 
 }
 
@@ -91,22 +91,22 @@ void Player::move() {
 
 void Player::refreshSprite() {
     if(steps % 4 == 0) {
-        if(currentSprite.toImage() == standing.toImage()) {
+        if(currentSprite == standing) {
             nextSprite = walkingTransition;
             qDebug() << "Going to transtition" << endl;
         }
 
-        if(currentSprite.toImage() == walkingFull.toImage()) {
+        if(currentSprite == walkingFull) {
             nextSprite = walkingTransition;
             qDebug() << " Going to transition" << endl;
         }
 
-        if(currentSprite.toImage() == walkingTransition.toImage()) {
+        if(currentSprite == walkingTransition) {
             nextSprite = walkingFull;
             qDebug() << "Going to full" << endl;
         }
 
-        setPixmap(nextSprite);
+        setPixmap(nextSprite.getPixmap());
         currentSprite = nextSprite;
     }
     return;
