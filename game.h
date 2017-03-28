@@ -3,10 +3,9 @@
 
 #include <QApplication>
 
-#include <gameview.h>
+#include "gameview.h"
 
-class Game{
-
+class Game {
 public:
     Game(QApplication *qApplcation);
     void newGame();

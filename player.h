@@ -1,9 +1,9 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <mobileentity.h>
-
 #include <QSet>
+
+#include "mobileentity.h"
 
 class Player : public MobileEntity {
 

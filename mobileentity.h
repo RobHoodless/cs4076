@@ -1,9 +1,10 @@
 #ifndef MOBILEENTITY_H
 #define MOBILEENTITY_H
 
-#include <sprite.h>
-#include <entity.h>
 #include <QString>
+
+#include "entity.h"
+#include "sprite.h"
 
 class MobileEntity : public Entity {
 public:
@@ -19,7 +20,6 @@ protected:
     Sprite walkingFull;
     int maxX;
     int maxY;
-
 };
 
 #endif // MOBILEENTITY_H

@@ -4,8 +4,7 @@
 #include <QGraphicsPixmapItem>
 #include <QImage>
 
-class Entity: public QGraphicsPixmapItem
-{
+class Entity: public QGraphicsPixmapItem {
 public:
     Entity();
     virtual void draw() = 0;

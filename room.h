@@ -1,19 +1,15 @@
 #ifndef ROOM_H
 #define ROOM_H
 
-#include <QGraphicsScene>
-
 #include <vector>
 
-#include "entity.h"
-#include "stationaryentity.h"
-#include "mobileentity.h"
+#include <QGraphicsScene>
+
+#include "door.h"
 #include "item.h"
-#include "entity.h"
-#include "stationaryentity.h"
 #include "mobileentity.h"
 #include "player.h"
-#include "door.h"
+#include "stationaryentity.h"
 
 using namespace std;
 

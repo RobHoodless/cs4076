@@ -1,9 +1,9 @@
 #ifndef DOOR_H
 #define DOOR_H
 
-#include "player.h"
-#include "stationaryentity.h"
 #include "direction.h"
+#include "stationaryentity.h"
+#include "player.h"
 
 class Door : public StationaryEntity {
 public:

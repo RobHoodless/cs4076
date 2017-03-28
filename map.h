@@ -1,13 +1,13 @@
 #ifndef MAP_H
 #define MAP_H
 
-#include <QGraphicsScene>
-
 #include <vector>
 
-#include "room.h"
-#include "player.h"
+#include <QGraphicsScene>
+
 #include "direction.h"
+#include "player.h"
+#include "room.h"
 
 using namespace std;
 

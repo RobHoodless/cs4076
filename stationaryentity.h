@@ -1,9 +1,10 @@
 #ifndef STATIONARYENTITY_H
 #define STATIONARYENTITY_H
 
-#include "player.h"
 #include <string>
-#include <collidableentity.h>
+
+#include "collidableentity.h"
+#include "player.h"
 
 using namespace std;
 
@@ -17,7 +18,6 @@ protected:
     string imagePath = "";
     QPixmap sprite;
     bool deleted = false;
-
 };
 
 #endif // STATIONARYENTITY_H

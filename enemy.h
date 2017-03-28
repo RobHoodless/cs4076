@@ -1,8 +1,9 @@
 #ifndef ENEMY_H
 #define ENEMY_H
-#include <mobileentity.h>
-#include <collidableentity.h>
-#include <player.h>
+
+#include "collidableentity.h"
+#include "mobileentity.h"
+#include "player.h"
 
 class Enemy: public MobileEntity, public CollidableEntity {
 public:

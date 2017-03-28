@@ -1,10 +1,9 @@
 #ifndef COLLIDABLEENTITY_H
 #define COLLIDABLEENTITY_H
 
-#include <player.h>
+#include "player.h"
 
-class CollidableEntity
-{
+class CollidableEntity {
 public:
     CollidableEntity();
     virtual void handleCollision(Player *player) = 0;
