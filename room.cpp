@@ -17,14 +17,13 @@
 
 using namespace std;
 
-Room::Room(QGraphicsScene *scene, Player *player) {
-    this->player = player;
-    this->scene = scene;
-}
+Room::Room(QGraphicsScene *scene, Player *player)
+    :player(player),
+     scene(scene){ }
 
 Room::~Room()
 {
-    qDebug() << "Room destructor called" << endl;
+
 }
 
 void Room::setup(bool n, bool e, bool s, bool w) {
@@ -83,7 +82,7 @@ void Room::createEntities() {
         this->items.push_back(itemPtr);
     }
 
-    for(int i = 0; i < 1; i++) {
+    for(int i = 0; i < 2; i++) {
         //Enforce enemy isn't in player spawn zone.
         int x = rand_partial();
         while(x > 200 && x < 450) {
