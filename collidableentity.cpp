@@ -1,6 +1,5 @@
 #include "collidableentity.h"
 
-CollidableEntity::CollidableEntity()
-{
+CollidableEntity::CollidableEntity() {
 
 }

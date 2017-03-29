@@ -1,5 +1,4 @@
 #include "sprite.h"
-#include "QDebug"
 
 Sprite::Sprite() {
     //Empty implementation.

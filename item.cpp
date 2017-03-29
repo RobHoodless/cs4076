@@ -2,7 +2,6 @@
 
 #include <QImage>
 #include <QPixmap>
-#include <QDebug>
 
 Item::Item() {
     spriteSheet = new QImage(":/images/diamond.png");

@@ -7,22 +7,19 @@
 #include <QString>
 
 #include <time.h>
-
-#include <room.h>
-#include <player.h>
-#include <item.h>
-#include <gameview.h>
-
 #include <unistd.h>
+
+#include "gameview.h"
+#include "item.h"
 #include "map.h"
+#include "player.h"
+#include "room.h"
 
 Game::Game(QApplication *qApplication) {
     this->qApplication = qApplication;
 }
 
-Game::~Game()
-{
-}
+Game::~Game() {}
 
 void Game::newGame() {
     run();
@@ -35,25 +32,25 @@ void Game::run() {
     const int MAP_SIZE = 150;
 
     // Create the scene
-    QGraphicsScene * scene = new QGraphicsScene();
-    scene->setSceneRect(0,0,MAX_X,MAX_Y);
-    scene->setBackgroundBrush(QBrush(QImage(":/images/background.png")));
+    QGraphicsScene *scenePtr = new QGraphicsScene();
+    scenePtr->setSceneRect(0,0,MAX_X,MAX_Y);
+    scenePtr->setBackgroundBrush(QBrush(QImage(":/images/background.png")));
 
     // Create the item to put into the scene.
-    Player * player = new Player(MAX_X, MAX_Y - MAP_SIZE);
+    Player *playerPtr = new Player(MAX_X, MAX_Y - MAP_SIZE);
 
     // Add the player to the scene
-    scene->addItem(player);
+    scenePtr->addItem(playerPtr);
 
-    Map map(scene, player);
+    Map map(scenePtr, playerPtr);
 
-    Room *room = map.getActiveRoom();
+    Room *roomPtr = map.getActiveRoom();
 
     // Add the view needed to visualise the scene.
-    view = new GameView(scene, player, room);
+    view = new GameView(scenePtr, playerPtr, roomPtr);
 
     //draw the room onscreen.
-    room->draw();
+    roomPtr->draw();
 
     view->show();
 
@@ -71,7 +68,7 @@ void Game::run() {
         time_counter += (double) (this_time - last_time);
         last_time = this_time;
 
-        if(room->isPlayerDead()) {
+        if (roomPtr->isPlayerDead()) {
             this->setFinished(true);
             this->setGameOver(true);
         }
@@ -79,34 +76,34 @@ void Game::run() {
         if (time_counter > (double)(NUM_SECONDS * CLOCKS_PER_SEC)) {
             time_counter -= (double)(NUM_SECONDS * CLOCKS_PER_SEC);
             count++;
-            room->refresh();
+            roomPtr->refresh();
         }
 
-        if (player->getScore() >= map.getNumItems()) {
+        if (playerPtr->getScore() >= map.getNumItems()) {
             qDebug() << "You win!";
             this->setFinished(true);
             this->setGameOver(true);
         }
 
         // If player has collided with a door, ie. Moving to a neighbour room
-        if (room->getNextDirection() >= 0) {
-            map.changeActiveRoom(static_cast<Direction>(room->getNextDirection()));
+        if (roomPtr->getNextDirection() >= 0) {
+            map.changeActiveRoom(static_cast<Direction>(roomPtr->getNextDirection()));
 
-            room = map.getActiveRoom();
+            roomPtr = map.getActiveRoom();
 
-            map.printMap(scene);
+            map.printMap(scenePtr);
 
-            room->draw();
+            roomPtr->draw();
         }
     }
 
-    if(isGameOver()) {
+    if (isGameOver()) {
         sleep(2);
     }
 
     qApplication->exit();
     view->close();
-    delete scene;
+    delete scenePtr;
 }
 
 bool Game::isPaused() const {
