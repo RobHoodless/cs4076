@@ -21,10 +21,8 @@ void Item::draw() {
 
 void Item::handleCollision(Player *player) {
     player->incrementScore();
-    this->deleted = true;
-    delete this;
+    this->pickedUp = true;
+    this->hide();
 }
 
-bool StationaryEntity::isDeleted() {
-    return this->deleted;
-}
+

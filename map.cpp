@@ -19,6 +19,17 @@ Map::Map(QGraphicsScene *scene, Player *player) {
     this->printMap(scene);
 }
 
+Map::~Map()
+{
+    //Call the destructor for all elements in vector.
+    for(vector<Room*> roomVector: rooms) {
+        qDebug() << "Start calling room destructors" << endl;
+        for(Room* room: roomVector) {
+            delete room;
+        }
+    }
+}
+
 void Map::createMap(QGraphicsScene *scene, Player *player) {
     srand(time(NULL));
 

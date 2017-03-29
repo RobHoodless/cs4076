@@ -12,12 +12,12 @@ class StationaryEntity : public Entity, public CollidableEntity
 {
 public:
     StationaryEntity();
-    bool isDeleted();
+    bool isPickedUp();
 
 protected:
     string imagePath = "";
     QPixmap sprite;
-    bool deleted = false;
+    bool pickedUp = false;
 };
 
 #endif // STATIONARYENTITY_H

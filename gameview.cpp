@@ -32,6 +32,6 @@ bool GameView::isPaused() const {
     return this->paused;
 }
 
-//GameView::~GameView() {
+GameView::~GameView() {
     //Empty implementation for now
-//}
+}

@@ -97,8 +97,8 @@ void Player::refreshSprite() {
 void Player::handleCollisions() {
     QList<QGraphicsItem *> colItems = collidingItems();
     for(QGraphicsItem* entity: colItems) {
-       CollidableEntity * itemEntity = dynamic_cast<CollidableEntity*>(entity);
-       itemEntity->handleCollision(this);
+       CollidableEntity * myEntity = dynamic_cast<CollidableEntity*>(entity);
+       myEntity->handleCollision(this);
     }
 }
 

@@ -14,6 +14,7 @@ using namespace std;
 class Map {
 public:
     Map(QGraphicsScene *scene, Player *player);
+    ~Map();
     void changeActiveRoom(Direction direction);
     Room* getActiveRoom();
     void printMap(QGraphicsScene *scene) const;

@@ -20,6 +20,10 @@ Game::Game(QApplication *qApplication) {
     this->qApplication = qApplication;
 }
 
+Game::~Game()
+{
+}
+
 void Game::newGame() {
     run();
 }
@@ -102,6 +106,7 @@ void Game::run() {
 
     qApplication->exit();
     view->close();
+    delete scene;
 }
 
 bool Game::isPaused() const {
@@ -130,7 +135,6 @@ int main(int argc, char *argv[]) {
     Game game(&a);
     //main game loop is in here, don't need QApplication.exec()
     game.newGame();
-
     //return a.exec();
     return 0;
 }

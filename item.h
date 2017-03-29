@@ -11,6 +11,8 @@ public:
     void draw();
     void handleCollision(Player *player);
 
+
+
 private:
     int initialX = 0;
     int initialY = 0;

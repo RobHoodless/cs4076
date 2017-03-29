@@ -8,6 +8,7 @@
 class Game {
 public:
     Game(QApplication *qApplcation);
+    ~Game();
     void newGame();
     bool isFinished() const;
     bool isPaused() const;

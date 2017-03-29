@@ -13,11 +13,18 @@
 
 #include "room.h"
 
+#include <QDebug>
+
 using namespace std;
 
 Room::Room(QGraphicsScene *scene, Player *player) {
     this->player = player;
     this->scene = scene;
+}
+
+Room::~Room()
+{
+    qDebug() << "Room destructor called" << endl;
 }
 
 void Room::setup(bool n, bool e, bool s, bool w) {
@@ -34,21 +41,25 @@ void Room::tearDown() {
         if (sceneItems.contains(enemy)) {
             scene->removeItem(enemy);
         }
+        delete enemy;
     }
 
     for (auto &item: this->items) {
+        if (item->isPickedUp()) {
+            this->numItems--;
+        }
         if (sceneItems.contains(item)) {
             scene->removeItem(item);
-        }
-
-        if (item->isDeleted()) {
-            this->numItems--;
+            delete item;
         }
     }
 
     for (auto &door: this->doors) {
         if (sceneItems.contains(door)) {
             this->scene->removeItem(door);
+
+        } else {
+            delete door;
         }
     }
 
@@ -75,7 +86,7 @@ void Room::createEntities() {
     for(int i = 0; i < 1; i++) {
         //Enforce enemy isn't in player spawn zone.
         int x = rand_partial();
-        while(x > 300 && x < 400) {
+        while(x > 200 && x < 450) {
             x = rand_partial();
         }
 
