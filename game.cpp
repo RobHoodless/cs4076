@@ -5,6 +5,7 @@
 #include <QGraphicsTextItem>
 #include <QDebug>
 #include <QString>
+#include <QtWidgets>
 
 #include <time.h>
 #include <unistd.h>
@@ -22,6 +23,7 @@ Game::Game(QApplication *qApplication) {
 Game::~Game() {}
 
 void Game::newGame() {
+
     run();
 }
 
@@ -87,12 +89,7 @@ void Game::run() {
 
         // If player has collided with a door, ie. Moving to a neighbour room
         if (roomPtr->getNextDirection() >= 0) {
-            map.changeActiveRoom(static_cast<Direction>(roomPtr->getNextDirection()));
-
-            roomPtr = map.getActiveRoom();
-
-            map.printMap(scenePtr);
-
+            roomPtr = map.changeActiveRoom(static_cast<Direction>(roomPtr->getNextDirection()), scenePtr);
             roomPtr->draw();
         }
     }

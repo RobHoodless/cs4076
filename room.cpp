@@ -154,3 +154,7 @@ int Room::getNextDirection() const {
 
     return -1;
 }
+
+int Room::getNumItems() const {
+    return this->numItems;
+}
