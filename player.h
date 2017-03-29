@@ -19,6 +19,10 @@ public:
     bool isDead();
     void incrementScore();
     int getScore();
+    void moveNorth();
+    void moveEast();
+    void moveWest();
+    void moveSouth();
 
 private:
     QSet<int> keysPressed;

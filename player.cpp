@@ -56,22 +56,37 @@ void Player::draw() {
 void Player::move() {
     steps++;
     if (movingWest) {
-        int nextX = ((((this->x() - 10)) < 0) ? 0 : (this->x() - 10));
-        this->setPos(nextX, this->y());
+        moveWest();
     }
     if (movingEast) {
-        int nextX = ((((this->x() + 10)) > this->maxX) ? this->maxX : (this->x() + 10));
-        this->setPos(nextX, this->y());
+        moveEast();
     }
     if (movingNorth) {
-        int nextY = ((((this->y() - 10)) < 0) ? 0 : (this->y() - 10));
-        this->setPos(this->x(), nextY);
+        moveNorth();
     }
     if (movingSouth) {
-        int nextY = ((this->y() + 10) > this->maxY) ? this->maxY : this->y() + 10;
-        this->setPos(this->x(), nextY);
-
+        moveSouth();
     }
+}
+
+void Player::moveNorth() {
+    int nextY = ((((this->y() - 10)) < 0) ? 0 : (this->y() - 10));
+    this->setPos(this->x(), nextY);
+}
+
+void Player::moveWest() {
+    int nextX = ((((this->x() - 10)) < 0) ? 0 : (this->x() - 10));
+    this->setPos(nextX, this->y());
+}
+
+void Player::moveEast() {
+    int nextX = ((((this->x() + 10)) > this->maxX) ? this->maxX : (this->x() + 10));
+    this->setPos(nextX, this->y());
+}
+
+void Player::moveSouth() {
+    int nextY = ((this->y() + 10) > this->maxY) ? this->maxY : this->y() + 10;
+    this->setPos(this->x(), nextY);
 }
 
 void Player::refreshSprite() {
@@ -118,3 +133,5 @@ void Player::incrementScore() {
 int Player::getScore() {
     return this->score;
 }
+
+
