@@ -21,8 +21,7 @@ Map::Map(QGraphicsScene * const scene, Player * const player) {
     this->printMap(scene);
 }
 
-Map::~Map()
-{
+Map::~Map() {
     //Call the destructor for all elements in vector.
     for(vector<Room*> roomVector: rooms) {
         for(Room* room: roomVector) {

@@ -19,9 +19,6 @@ void GameView::keyPressEvent(QKeyEvent *event) {
         this->paused = true;
     }
 
-    if (event->key() == Qt::Key_U) {
-        this->room->tearDown();
-    }
     //Qt seems to only support a single key press consumer, so manually passing event to player.
     this->player->keyPressEvent(event);
 }

@@ -22,7 +22,6 @@ Game::Game(QApplication  * const qApplication) {
 Game::~Game() {}
 
 void Game::newGame() {
-
     run();
 }
 
