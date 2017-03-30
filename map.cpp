@@ -1,7 +1,5 @@
 #include <QCoreApplication>
 #include <QGraphicsScene>
-#include <QDebug>
-#include <QtDebug>
 #include <QString>
 #include <time.h>
 #include <vector>
@@ -27,7 +25,6 @@ Map::~Map()
 {
     //Call the destructor for all elements in vector.
     for(vector<Room*> roomVector: rooms) {
-        qDebug() << "Start calling room destructors" << endl;
         for(Room* room: roomVector) {
             delete room;
         }

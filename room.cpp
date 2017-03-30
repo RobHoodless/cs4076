@@ -6,7 +6,6 @@
 #include <vector>
 
 #include <QGraphicsScene>
-#include <QDebug>
 
 #include "door.h"
 #include "enemy.h"

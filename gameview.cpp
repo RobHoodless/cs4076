@@ -2,7 +2,6 @@
 
 #include <QGraphicsScene>
 #include <QGraphicsView>
-#include <QDebug>
 #include <QKeyEvent>
 
 #include "player.h"
@@ -23,8 +22,7 @@ void GameView::keyPressEvent(QKeyEvent *event) {
     if (event->key() == Qt::Key_U) {
         this->room->tearDown();
     }
-    //Qt seems to only support a single key press consumer, so manually passing event to player - should probably change the function call
-    //as player is technically no longer subscribed to the event (it seems).
+    //Qt seems to only support a single key press consumer, so manually passing event to player.
     this->player->keyPressEvent(event);
 }
 

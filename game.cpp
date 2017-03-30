@@ -3,7 +3,6 @@
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QGraphicsTextItem>
-#include <QDebug>
 #include <QString>
 #include <QtWidgets>
 
@@ -82,7 +81,6 @@ void Game::run() {
         }
 
         if (playerPtr->getScore() >= map.getNumItems()) {
-            qDebug() << "You win!";
             this->setFinished(true);
             this->setGameOver(true);
         }

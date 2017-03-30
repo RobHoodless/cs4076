@@ -1,6 +1,5 @@
 #include "player.h"
 
-#include <QDebug>
 #include <QKeyEvent>
 
 #include "collidableentity.h"
@@ -128,7 +127,6 @@ bool Player::isDead() {
 
 void Player::incrementScore() {
     this->score++;
-    qDebug() << this->score;
 }
 
 int Player::getScore() {
