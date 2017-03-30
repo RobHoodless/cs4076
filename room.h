@@ -26,6 +26,7 @@ public:
     void tearDown();
     bool isPlayerDead() const;
     void createEntities();
+    int getNumItems() const;
 
 private:
     void createDoors();

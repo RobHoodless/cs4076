@@ -1,5 +1,4 @@
 #include "enemy.h"
-#include "QDebug"
 
 Enemy::Enemy(int initialX, int initialY, int maxX, int maxY, int movementAxis) : MobileEntity(":/images/enemy.png", maxX, maxY) {
     this->initialX = initialX;

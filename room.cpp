@@ -1,19 +1,17 @@
+#include "room.h"
+
+#include <functional>
+#include <random>
+#include <time.h>
+#include <vector>
+
 #include <QGraphicsScene>
 #include <QDebug>
 
-#include <random>
-#include <functional>
-#include <time.h>
-#include <enemy.h>
-#include <vector>
-
-#include "player.h"
-#include "item.h"
 #include "door.h"
-
-#include "room.h"
-
-#include <QDebug>
+#include "enemy.h"
+#include "item.h"
+#include "player.h"
 
 using namespace std;
 
@@ -21,10 +19,7 @@ Room::Room(QGraphicsScene *scene, Player *player)
     :player(player),
      scene(scene){ }
 
-Room::~Room()
-{
-
-}
+Room::~Room() {}
 
 void Room::setup(bool n, bool e, bool s, bool w) {
     this->neighbourNorth = n;
@@ -158,4 +153,8 @@ int Room::getNextDirection() const {
     }
 
     return -1;
+}
+
+int Room::getNumItems() const {
+    return this->numItems;
 }

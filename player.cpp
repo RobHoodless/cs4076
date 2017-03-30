@@ -1,7 +1,7 @@
 #include "player.h"
 
-#include <QKeyEvent>
 #include <QDebug>
+#include <QKeyEvent>
 
 #include "collidableentity.h"
 #include "item.h"
@@ -91,16 +91,16 @@ void Player::moveSouth() {
 }
 
 void Player::refreshSprite() {
-    if(steps % 4 == 0) {
-        if(currentSprite == standing) {
+    if (steps % 4 == 0) {
+        if (currentSprite == standing) {
             nextSprite = walkingTransition;
         }
 
-        if(currentSprite == walkingFull) {
+        if (currentSprite == walkingFull) {
             nextSprite = walkingTransition;
         }
 
-        if(currentSprite == walkingTransition) {
+        if (currentSprite == walkingTransition) {
             nextSprite = walkingFull;
         }
 

@@ -1,7 +1,5 @@
 #include "mobileentity.h"
 
-
-
 MobileEntity::MobileEntity(QString filepath, int maxX, int maxY)  {
     spriteSheet = new QImage(filepath);
     standing = Sprite(QPixmap::fromImage(spriteSheet->copy(0, 0, 100, 100)));

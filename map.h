@@ -15,9 +15,11 @@ class Map {
 public:
     Map(QGraphicsScene *scene, Player *player);
     ~Map();
-    void changeActiveRoom(Direction direction);
-    Room* getActiveRoom();
-    void printMap(QGraphicsScene *scene) const;
+    Room* changeActiveRoom(Direction direction, QGraphicsScene *scene);
+    Room* getActiveRoom() const;
+    void printMap(QGraphicsScene *scene);
+    void removePreviousActiveCell();
+    void updateActiveCell(QGraphicsScene *scene);
     int getNumItems() const;
 
 private:
@@ -27,11 +29,13 @@ private:
     Room *activeRoom;
     void createMap(QGraphicsScene *scene, Player *player);
     void fillNeighbours(bool* neighbours, int x, int y) const;
+    void removeActiveCell();
     inline void goNorth();
     inline void goEast();
     inline void goSouth();
     inline void goWest();
     int numRooms = 0;
+    QGraphicsRectItem *activeCellPtr;
 };
 
 #endif // MAP_H
