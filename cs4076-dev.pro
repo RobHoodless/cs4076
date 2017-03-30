@@ -51,7 +51,6 @@ HEADERS  += game.h \
     enemy.h \
     map.h \
     sprite.h \
-    mypixmap.h \
     direction.h 
 
 FORMS    +=

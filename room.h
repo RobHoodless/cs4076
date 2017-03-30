@@ -31,7 +31,7 @@ private:
     void createDoors();
     void handleCollisions() const;
     QGraphicsScene *scene;
-    Player *player;
+    Player *player = nullptr;
     vector<StationaryEntity *> items;
     vector<Door *> doors;
     vector<MobileEntity *> enemies;

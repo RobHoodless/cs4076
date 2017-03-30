@@ -10,6 +10,7 @@ Player::Player(int maxX, int maxY) : MobileEntity(":/images/dragon.png", maxX, m
     // Make player focusable
     this->setFlag(QGraphicsItem::ItemIsFocusable);
     this->setFocus();
+
 }
 
 void Player::keyReleaseEvent(QKeyEvent *event) {
