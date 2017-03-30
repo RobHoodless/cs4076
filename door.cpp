@@ -22,7 +22,7 @@ void Door::draw() {
         spriteSheet = new QImage(":images/door_horizontal.png");
         sprite = QPixmap::fromImage(spriteSheet->copy(0, 0, 100, 50));
         setPixmap(sprite);
-        setPos(400, 400);
+        setPos(350, 400);
     } else if (direction == WEST) {
         spriteSheet = new QImage(":/images/door.png");
         sprite = QPixmap::fromImage(spriteSheet->copy(0, 0, 50, 100));
