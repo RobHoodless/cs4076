@@ -15,7 +15,7 @@ public:
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
     void handleCollisions();
-    void setDead(bool dead);
+    void setDead( const bool dead);
     bool isDead();
     void incrementScore();
     int getScore();

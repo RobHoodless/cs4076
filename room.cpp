@@ -14,13 +14,13 @@
 
 using namespace std;
 
-Room::Room(QGraphicsScene *scene, Player *player)
+Room::Room(QGraphicsScene * const scene, Player * const player)
     :player(player),
      scene(scene){ }
 
 Room::~Room() {}
 
-void Room::setup(bool n, bool e, bool s, bool w) {
+void Room::setup(const bool n, const bool e, const bool s, const bool w) {
     this->neighbourNorth = n;
     this->neighbourEast = e;
     this->neighbourSouth = s;
@@ -30,14 +30,14 @@ void Room::setup(bool n, bool e, bool s, bool w) {
 void Room::tearDown() {
     QList<QGraphicsItem*> sceneItems = this->scene->items();
 
-    for (auto &enemy: this->enemies) {
+    for (MobileEntity * enemy: this->enemies) {
         if (sceneItems.contains(enemy)) {
             scene->removeItem(enemy);
         }
         delete enemy;
     }
 
-    for (auto &item: this->items) {
+    for (StationaryEntity * item: this->items) {
         if (item->isPickedUp()) {
             this->numItems--;
         }
@@ -47,10 +47,9 @@ void Room::tearDown() {
         }
     }
 
-    for (auto &door: this->doors) {
+    for (Door * door: this->doors) {
         if (sceneItems.contains(door)) {
             this->scene->removeItem(door);
-
         } else {
             delete door;
         }
@@ -132,7 +131,7 @@ void Room::draw() const {
         item->draw();
     }
 
-    for (auto & door: this->doors) {
+    for (Door * door: this->doors) {
         this->scene->addItem(door);
         door->draw();
     }
@@ -147,7 +146,7 @@ bool Room::isPlayerDead() const {
 }
 
 int Room::getNextDirection() const {
-    for(auto & door: this->doors) {
+    for(Door * door: this->doors) {
         if (door->isExited()) return door->getDirection();
     }
 

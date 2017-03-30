@@ -18,7 +18,7 @@ void Item::draw() {
     setPos(this->initialX, this->initialY);
 }
 
-void Item::handleCollision(Player *player) {
+void Item::handleCollision(Player * const player) {
     player->incrementScore();
     this->pickedUp = true;
     this->hide();

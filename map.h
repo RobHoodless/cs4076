@@ -13,13 +13,13 @@ using namespace std;
 
 class Map {
 public:
-    Map(QGraphicsScene *scene, Player *player);
+    Map(QGraphicsScene * const scene, Player * const player);
     ~Map();
-    Room* changeActiveRoom(Direction direction, QGraphicsScene *scene);
+    Room* changeActiveRoom(const Direction & direction, QGraphicsScene *scene);
     Room* getActiveRoom() const;
-    void printMap(QGraphicsScene *scene);
+    void printMap(QGraphicsScene * const scene);
     void removePreviousActiveCell();
-    void updateActiveCell(QGraphicsScene *scene);
+    void updateActiveCell(QGraphicsScene * const scene);
     int getNumItems() const;
 
 private:
@@ -27,8 +27,8 @@ private:
     int activeY;
     vector< vector< Room* > > rooms;
     Room *activeRoom;
-    void createMap(QGraphicsScene *scene, Player *player);
-    void fillNeighbours(bool* neighbours, int x, int y) const;
+    void createMap(QGraphicsScene * const scene, Player * const player);
+    void fillNeighbours(bool * const neighbours, const int x, const int y);
     void removeActiveCell();
     inline void goNorth();
     inline void goEast();

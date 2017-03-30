@@ -9,7 +9,7 @@
 
 using namespace std;
 
-GameView::GameView(QGraphicsScene *scene, Player *player, Room *room): QGraphicsView(scene) {
+GameView::GameView(QGraphicsScene * const scene, Player * const player, Room *room): QGraphicsView(scene) {
     this->player = player;
     this->room = room;
 }

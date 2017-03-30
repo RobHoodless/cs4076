@@ -7,9 +7,9 @@
 
 class Door : public StationaryEntity {
 public:
-    Door(Direction direction);
+    Door(const Direction & direction);
     //Player obtainedBy();
-    void handleCollision(Player *player);
+    void handleCollision(Player *const player) override;
     void draw();
     bool isExited() const; //returns true if player collided with door
     Direction getDirection() const;

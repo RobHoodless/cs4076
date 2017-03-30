@@ -9,7 +9,7 @@ public:
     Item();
     Item(int initialX, int initialY);
     void draw();
-    void handleCollision(Player *player);
+    void handleCollision(Player * const player) override;
 
 
 

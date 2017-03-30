@@ -6,7 +6,7 @@
 class CollidableEntity {
 public:
     CollidableEntity();
-    virtual void handleCollision(Player *player) = 0;
+    virtual void handleCollision(Player * const player) = 0;
 };
 
 #endif // COLLIDABLEENTITY_H

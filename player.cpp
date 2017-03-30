@@ -117,7 +117,7 @@ void Player::handleCollisions() {
     }
 }
 
-void Player::setDead(bool dead) {
+void Player::setDead(const bool dead) {
     this->dead = dead;
 }
 

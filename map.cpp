@@ -16,7 +16,7 @@ static const int CELL_MAP_Y = 475;
 static const int CELL_SIZE = 20;
 static const int CELL_PADDING = 2;
 
-Map::Map(QGraphicsScene *scene, Player *player) {
+Map::Map(QGraphicsScene * const scene, Player * const player) {
     this->createMap(scene, player);
     this->printMap(scene);
 }
@@ -31,7 +31,7 @@ Map::~Map()
     }
 }
 
-void Map::createMap(QGraphicsScene *scene, Player *player) {
+void Map::createMap(QGraphicsScene * const scene, Player * const player) {
     srand(time(NULL));
 
     int roomPositions[MAP_SIZE];
@@ -96,7 +96,7 @@ void Map::createMap(QGraphicsScene *scene, Player *player) {
     this->activeRoom->createEntities();
 }
 
-void Map::printMap(QGraphicsScene *scene) {
+void Map::printMap(QGraphicsScene * const scene) {
     int x = CELL_MAP_X;
     int y = CELL_MAP_Y;
 
@@ -117,14 +117,14 @@ void Map::printMap(QGraphicsScene *scene) {
     }
 }
 
-void Map::fillNeighbours(bool* nesw, int x, int y) const {
+void Map::fillNeighbours(bool * const nesw, const int x, const int y) {
     if ((y - 1) >= 0 && rooms[y - 1][x]) nesw[0] = true; // North
     if ((x + 1) < MAP_SIZE && rooms[y][x + 1]) nesw[1] = true; // East
     if ((y + 1) < MAP_SIZE && rooms[y + 1][x]) nesw[2] = true; // South
     if ((x - 1) >= 0 && rooms[y][x - 1]) nesw[3] = true; // West
 }
 
-Room* Map::changeActiveRoom(Direction direction, QGraphicsScene *scene) {
+Room* Map::changeActiveRoom(const Direction & direction, QGraphicsScene * const scene) {
     this->activeRoom->tearDown();
 
     this->removePreviousActiveCell();
@@ -150,7 +150,7 @@ void Map::removePreviousActiveCell() {
     }
 }
 
-void Map::updateActiveCell(QGraphicsScene *scene) {
+void Map::updateActiveCell(QGraphicsScene * const scene) {
     int roomX = CELL_MAP_X;
     int roomY = CELL_MAP_Y;
 

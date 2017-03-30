@@ -3,7 +3,7 @@
 #include "player.h"
 #include "direction.h"
 
-Door::Door(Direction direction) {
+Door::Door(const Direction & direction) {
     this->direction = direction;
 }
 
@@ -31,7 +31,7 @@ void Door::draw() {
     }
 }
 
-void Door::handleCollision(Player *player) {
+void Door::handleCollision(Player * const player) {
     this->exited = true;
 }
 

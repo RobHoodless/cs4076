@@ -7,13 +7,13 @@
 
 class Game {
 public:
-    Game(QApplication *qApplcation);
+    Game(QApplication * const qApplcation);
     ~Game();
     void newGame();
     bool isFinished() const;
     bool isPaused() const;
-    void setFinished(bool finished);
-    void setGameOver(bool gameOver);
+    void setFinished(const bool finished);
+    void setGameOver(const bool gameOver);
     bool isGameOver() const;
     //void loadGame(string filePath);
 

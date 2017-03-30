@@ -15,7 +15,7 @@
 #include "player.h"
 #include "room.h"
 
-Game::Game(QApplication *qApplication) {
+Game::Game(QApplication  * const qApplication) {
     this->qApplication = qApplication;
 }
 
@@ -92,6 +92,9 @@ void Game::run() {
         }
     }
 
+    //Delete objects in last room, won't be deleted by above logic as we are not leaving the room.
+    map.getActiveRoom()->tearDown();
+
     if (isGameOver()) {
         sleep(2);
     }
@@ -105,7 +108,7 @@ bool Game::isPaused() const {
     return this->view->isPaused();
 }
 
-void Game::setFinished(bool finished) {
+void Game::setFinished( const bool finished) {
     this->finished = finished;
 }
 
@@ -113,7 +116,7 @@ bool Game::isFinished() const {
     return this->finished;
 }
 
-void Game::setGameOver(bool gameOver) {
+void Game::setGameOver(const bool gameOver) {
     this->gameOver = gameOver;
 }
 

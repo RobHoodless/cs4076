@@ -9,7 +9,7 @@
 
 class GameView : public QGraphicsView {
 public:
-    GameView(QGraphicsScene *scene, Player *player, Room *room);
+    GameView(QGraphicsScene *const scene, Player *const player, Room *room);
     ~GameView();
     void keyPressEvent(QKeyEvent *event);
     bool isPaused() const;

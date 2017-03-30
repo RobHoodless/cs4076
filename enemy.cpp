@@ -1,6 +1,6 @@
 #include "enemy.h"
 
-Enemy::Enemy(int initialX, int initialY, int maxX, int maxY, int movementAxis) : MobileEntity(":/images/enemy.png", maxX, maxY) {
+Enemy::Enemy(const int initialX, const int initialY, const int maxX, const int maxY, const int movementAxis) : MobileEntity(":/images/enemy.png", maxX, maxY) {
     this->initialX = initialX;
     this->initialY = initialY;
     this->movementAxis = movementAxis;
@@ -54,7 +54,7 @@ void Enemy::move() {
     return;
 }
 
-void Enemy::handleCollision(Player *player) {
+void Enemy::handleCollision(Player * const player) {
     player->setDead(true);
     return;
 }
